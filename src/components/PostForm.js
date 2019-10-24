@@ -1,4 +1,59 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Title = styled.input`
+  margin: 5px;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+  border: none;
+  width: 100%;
+  outline: none;
+`;
+
+const Sub = styled.input`
+    text-align: center;
+    border:none;
+    font-size: 1.2em;
+    width: 100%;
+    outline: none;
+`;
+
+const Subsub = styled.input`
+    text-align: center;
+    border:none;
+    font-size: 1em;
+    color: gray;
+    width: 100%;
+    outline: none;
+    margin-bottom: 30px;
+`;
+
+const Memo = styled.input`
+
+    background-color: whitesmoke;
+    font-size: 1.2em;
+    border-radius: 30px;
+    padding: 25px;
+    border: none;
+    width: 80%;
+    @media (min-width: 700px) {
+        width: 600px;
+    }
+    outline: none;
+`;
+const PostButton = styled.button`
+    margin-top: 30px;
+    margin-right: 20px;
+    border-radius: 30px;
+    border: 1px solid gray;
+    padding: 10px;
+    color: gray;
+    font-size: 1.2rem;
+    width: 150px;
+`;
+
+
 
 const PostForm = ({track, artist, album, artwork, onCreate, onChange}) => {
 
@@ -6,15 +61,15 @@ const PostForm = ({track, artist, album, artwork, onCreate, onChange}) => {
     return (
         <div>
             <form autoComplete="off" onSubmit = {onCreate}>
-                <input type="image" value ={artwork || ''} alt="artwork"/>
+                <input type="hidden" name="artwork" value ={artwork || ''}/>
 
                 <img src = {artwork} alt="img"/>
     
-                <input type="text" name = "track" value={track || ''}  readOnly/>
-                <input type="text" name = "artist" value={artist || ''} readOnly/>
-                <input type="text" name = "album" value={album || ''} readOnly/>
-                <input type="text" name = "memo" onChange = {onChange} placeholder ="write your memo here"/>
-                <button className="add" type = "submit">post!</button>
+                <Title type="text" name = "track" value={track || ''}  readOnly/>
+                <Sub type="text" name = "artist" value={artist || ''} readOnly/>
+                <Subsub type="text" name = "album" value={album || ''} readOnly/>
+                <Memo type="text" name = "memo" onChange = {onChange} placeholder ="write your memo here"/>
+                <div><PostButton className="add" type = "submit">Post</PostButton></div>
             </form>
             
         </div>

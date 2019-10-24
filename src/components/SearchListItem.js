@@ -15,6 +15,12 @@ const SearchListItem = ({artist, track, album, image, onClick }) => {
     margin: 10px;
     padding-top: 5px;
     padding-bottom: 15px;
+   
+    margin: 0 auto;
+    width: 80%;
+    @media (min-width: 800px) {
+        width: 500px;
+    }
     `;
 
     return (

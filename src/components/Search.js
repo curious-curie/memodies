@@ -1,9 +1,65 @@
 import React, { Component } from 'react'
 import SearchListItem from './SearchListItem';
 import PostForm from './PostForm';
+import styled from 'styled-components';
+import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
+
+const Wrapper = styled.div`
+text-align: center;
+`;
+
+const SearchInput = styled.input`
+    
+    width: 80%;
+    @media (min-width: 500px) {
+        width: 400px;
+    }
+    padding: 5px;
+    
+    font-size: 1.2rem;
+    border: none;
+    border-bottom: 1px solid gray;
+    outline: none;
+`;
+
+
+const SearchButton = styled.button`
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: white;
+`;
+
+const Block = styled.div`
+    display: inline;
+`;
+
+const BackButton = styled.button`
+    float: left;
+    border: none;
+    width: 200px;
+    color: gray;
+    font-size: 1.2rem;
+    @media (min-width: 500px) {
+        margin-left: 2em;
+        font-size: 1.4rem;
+    }
+    outline: none;
+    background-color: white;
+
+`;
+
+const PostFormWrapper = styled.div`
+    margin: 30px;
+    padding-top: 80px;
+`;
+
 
 
 export default class Search extends Component {
+    
 
     constructor(){
         super();
@@ -17,7 +73,6 @@ export default class Search extends Component {
         }
        
     }
-
 
 
     handleChange = (e) => {
@@ -34,8 +89,13 @@ export default class Search extends Component {
        }));
    }
 
- 
- 
+   handleKey = (e) => {
+    if(e.keyCode === 13){
+        e.preventDefault();
+       console.log('value', e.target.value);
+       this.search();
+       // put the login here
+    }};
   
     search = () => {
 
@@ -109,32 +169,39 @@ export default class Search extends Component {
     render() {
        
         return (
-            <div>
-
-                { this.state.isSearching && <div>
-                <form >
-                    <input type="text"  onChange={this.handleChange} value={this.state.searchTerm} placeholder="Search A Song"></input>
-                </form> 
-
-                <button type="button" onClick={()=>this.search()}>search</button>
-                    
-            
-                { this.state.results.map( item => <SearchListItem onClick={() => this.handleClick(item)} key={item.trackId} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
-                </div> }
+            <Wrapper>
 
                 { !this.state.isSearching &&
-                    <button type = "button" onClick={this.searchAgain}>search again</button> }
+                    <section><BackButton type = "button" onClick={this.searchAgain}>← Back To Search</BackButton></section> }
+                { this.state.isSearching && <div>
+                <form >
+                <Block> <SearchInput type="text"  onKeyDown = {this.handleKey} onChange={this.handleChange} value={this.state.searchTerm} placeholder="Search by title / artist"/> 
+                
+
+                <SearchButton type="button" onClick={()=>this.search()}> <SearchAlt/></SearchButton> </Block> </form> 
+                   
+                
+                { this.state.results.map( item => <SearchListItem onClick={() => this.handleClick(item)} key={item.trackId} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
+                
+                </div>
+                
+                }
+       
+
+            
 
                 { !this.state.isSearching && 
-                  <PostForm 
+                <PostFormWrapper>
+                  <PostForm
                   artist={this.state.selected['artistName']} 
                   track = {this.state.selected['trackName']}
                   artwork = {this.state.selected['artwork']}
                   album = {this.state.selected['collectionName']} />
+                </PostFormWrapper>
                 }
 
                   
-            </div>
+            </Wrapper>
         )
     }
 }

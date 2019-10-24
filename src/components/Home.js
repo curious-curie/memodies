@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import Post from './Post'
 
 const PostsWrapper = styled.div`
     display: flex;
@@ -8,68 +9,6 @@ const PostsWrapper = styled.div`
         flex-direction: row;
       }
 `
-const Wrapper = styled.div`
-    min-width: 300px;
-    margin: 50px;
-    padding-top: 10px;
-    width: 300px;
-    
-    border-radius: 10px;
-    overflow: hidden;
-    color: darkgray;
-`;
-
-const Title = styled.div`
-  margin: 5px;
-  font-weight: bold;
-  font-size: 1.5em;
-  text-align: center;
-`;
-
-const CD = styled.div`
-    position: relative;
-    width: 100%;
-    text-align: center;
- `;
-
-const TrackImage = styled.img`
-    width: 220px;
-    border-radius: 50%;
-    box-shadow: 0 4px 4px rgba(110, 110, 110, 0.1), 0 4px 4px rgba(98, 98, 98, 0.1);
- `;
-const Circle = styled.div`
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.;
-    z-index: 2;
-    top: 95px;
-    left: 130px;
-    box-shadow: inset 0 2px 2px rgba(110, 110, 110, 0.25), 0 4px 4px rgba(98, 98, 98, 0.22);
-`;
-
-const Artist = styled.div`
-    text-align: center;
-`;
-
-const MemoBox = styled.div`
-    color: gray;
-    text-indent: 1em;
-    text-align: justified;
-    margin: 15px;
-    background: whitesmoke;
-    padding: 25px;
-    border-radius: 5px;
-    line-height: 1.4;
-`;
-
-const Preview = styled.audio`
-    color: white;
-`;
-
-
 
 export default class Home extends Component {
 
@@ -91,28 +30,9 @@ export default class Home extends Component {
             <PostsWrapper>
                 {posts.map((post) => {
               return (
-                <Wrapper>
-                    <CD>
-              
-                        <TrackImage src = {post.artwork} alt="album artwork"/>
-                      
-                        <Circle/>
-                     
-                    </CD>
-                
-                {/* <Preview controls = "controls" src = {post.preview}/> */}
-                  <Title>{post.track}</Title>
-                 
-                  <Artist>{post.artist}</Artist>
-                  <Artist>{post.album}</Artist>
-                
-                  <MemoBox>{post.memo}</MemoBox>
-    
-                </Wrapper>
+                <Post artist = {post.artist} album = {post.album} track = {post.track} artwork = {post.artwork} memo = {post.memo}/>
                   )})}
             </PostsWrapper>
-        
-            
         )
     }
 }
