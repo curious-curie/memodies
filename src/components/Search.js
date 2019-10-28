@@ -92,16 +92,13 @@ export default class Search extends Component {
    handleKey = (e) => {
     if(e.keyCode === 13){
         e.preventDefault();
-       console.log('value', e.target.value);
        this.search();
        // put the login here
     }};
   
     search = () => {
 
-        let searchTerm = JSON.stringify(this.state.searchTerm);
-    
-        console.log(searchTerm)
+        let searchTerm = JSON.stringify(this.state.searchTerm).replace(/\s/g, '+')
         const api = `https://itunes.apple.com/search?term=${searchTerm}&entity=musicTrack`;
         
         let eachItem = {
@@ -127,6 +124,7 @@ export default class Search extends Component {
         .then(results =>{
             return results.json();
         }).then(data => {
+            console.log(searchTerm + ":" + data)
             data.results.forEach(item => {
                 eachItem = {
                     id: '',
@@ -173,7 +171,8 @@ export default class Search extends Component {
 
                 { !this.state.isSearching &&
                     <section><BackButton type = "button" onClick={this.searchAgain}>← Back To Search</BackButton></section> }
-                { this.state.isSearching && <div>
+                { this.state.isSearching && 
+                <div>
                 <form >
                 <Block> <SearchInput type="text"  onKeyDown = {this.handleKey} onChange={this.handleChange} value={this.state.searchTerm} placeholder="Search by title / artist"/> 
                 
@@ -181,18 +180,16 @@ export default class Search extends Component {
                 <SearchButton type="button" onClick={()=>this.search()}> <SearchAlt/></SearchButton> </Block> </form> 
                    
                 
-                { this.state.results.map( item => <SearchListItem onClick={() => this.handleClick(item)} key={item.trackId} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
+                { this.state.results.map( item => <SearchListItem key={item.trackId} onClick={() => this.handleClick(item)} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
                 
                 </div>
-                
                 }
        
-
-            
 
                 { !this.state.isSearching && 
                 <PostFormWrapper>
                   <PostForm
+                  id ={this.state.selected['id']} 
                   artist={this.state.selected['artistName']} 
                   track = {this.state.selected['trackName']}
                   artwork = {this.state.selected['artwork']}
