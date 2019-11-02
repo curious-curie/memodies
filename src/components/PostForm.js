@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Title = styled.input`
   margin: 5px;
@@ -55,25 +56,54 @@ const PostButton = styled.button`
 
 
 
-const PostForm = ({track, artist, album, artwork, onCreate, onChange}) => {
+// const PostForm = ({track, artist, album, artwork, onCreate, onChange}) => {
 
     
-    return (
+//     return (
+        // <div>
+        //     <form autoComplete="off" onSubmit = {this.handleSubmit}>
+        //         <input type="hidden" name="artwork" value ={artwork || ''}/>
+
+        //         <img src = {artwork} alt="img"/>
+    
+        //         <Title type="text" name = "track" value={track || ''}  readOnly/>
+        //         <Sub type="text" name = "artist" value={artist || ''} readOnly/>
+        //         <Subsub type="text" name = "album" value={album || ''} readOnly/>
+        //         <Memo type="text" name = "memo" onChange = {onChange} placeholder ="write your memo here"/>
+        //         <div><PostButton className="add" type = "submit">Post</PostButton></div>
+        //     </form>
+            
+        // </div>
+//     );
+// };
+
+// export default PostForm;
+
+
+
+
+export default class PostForm extends Component {
+    
+  
+    render() {
+
+        return (
         <div>
-            <form autoComplete="off" onSubmit = {this.handleSubmit}>
-                <input type="hidden" name="artwork" value ={artwork || ''}/>
+   
+            <form autoComplete="off">
+                <input type="hidden" name="artwork" value ={this.props.artwork || ''}/>
 
-                <img src = {artwork} alt="img"/>
+                <img src = {this.props.artwork} alt="img"/>
     
-                <Title type="text" name = "track" value={track || ''}  readOnly/>
-                <Sub type="text" name = "artist" value={artist || ''} readOnly/>
-                <Subsub type="text" name = "album" value={album || ''} readOnly/>
-                <Memo type="text" name = "memo" onChange = {onChange} placeholder ="write your memo here"/>
-                <div><PostButton className="add" type = "submit">Post</PostButton></div>
+                <Title type="text" name = "track" value={this.props.track || ''}  readOnly/>
+                <Sub type="text" name = "artist" value={this.props.artist || ''} readOnly/>
+                <Subsub type="text" name = "album" value={this.props.album || ''} readOnly/>
+                <Memo type="text" name = "memo" onChange = {this.props.getMemo} placeholder ="write your memo here"/>
+                <div><PostButton onClick={this.props.handleSubmit} className="add">Post</PostButton></div>
             </form>
             
+                
         </div>
-    );
-};
-
-export default PostForm;
+        )
+    }
+}

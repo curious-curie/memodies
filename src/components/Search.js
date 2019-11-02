@@ -3,7 +3,10 @@ import SearchListItem from './SearchListItem';
 import PostForm from './PostForm';
 import styled from 'styled-components';
 import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
-import Axios from 'axios';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:8000/api/';
 
 const Wrapper = styled.div`
 text-align: center;
@@ -70,6 +73,7 @@ export default class Search extends Component {
 
             ],
             selected: [],
+            memo: '',
             isSearching: true,
         }
 
@@ -81,6 +85,33 @@ export default class Search extends Component {
             searchTerm: e.target.value,
         });
 
+    }
+    
+    handleSubmit = (e) => {
+        e.preventDefault();
+        if(this.state.memo === '') alert("please write a memo!")
+        else{
+        axios.post('posts/', {
+            artist: this.state.selected['artistName'],
+            title : this.state.selected['trackName'],
+            artwork : this.state.selected['artwork'],
+            album : this.state.selected['collectionName'],
+            memo: this.state.memo,
+        }).then(res => {
+            console.log(res);
+        })
+        .catch(error => {
+            console.log(error)
+        });
+
+    }
+    }
+
+    getMemo = (e) => {
+        this.setState({
+            memo: e.target.value,
+        })
+        
     }
 
    handleClick(i){
@@ -115,6 +146,7 @@ export default class Search extends Component {
         this.setState(prevState => ({
             searchTerm: '',
             results: [],
+            memo: '',
             isSearching: true,
         }));
 
@@ -158,6 +190,7 @@ export default class Search extends Component {
             searchTerm: '',
             results: [],
             isSearching: true,
+            memo: '',
             selected: [],
         }));
     }
@@ -193,7 +226,8 @@ export default class Search extends Component {
                   track = {this.state.selected['trackName']}
                   artwork = {this.state.selected['artwork']}
                   album = {this.state.selected['collectionName']} 
-                  onCreate = {this.handleSubmit} />
+                  handleSubmit = {this.handleSubmit} 
+                  getMemo = {this.getMemo} />
                 </PostFormWrapper>
                 }
 
