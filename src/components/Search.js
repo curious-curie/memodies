@@ -109,7 +109,7 @@ export default class Search extends Component {
             album : this.state.selected['collectionName'],
             memo: this.state.memo,
         }).then(res => {
-            console.log(res);
+            this.props.history.push('/');
         })
         .catch(error => {
             console.log(error)

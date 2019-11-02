@@ -10,6 +10,9 @@ const Wrapper = styled.div`
     border-radius: 10px;
     overflow: hidden;
     color: darkgray;
+    border: 1px solid whitesmoke;
+   
+
 `;
 
 const Title = styled.div`
@@ -24,9 +27,11 @@ const CD = styled.div`
     position: relative;
     width: 100%;
     text-align: center;
+    
  `;
 
 const TrackImage = styled.img`
+    border: 1px solid whitesmoke;
     width: 220px;
     border-radius: 50%;
     box-shadow: 0 4px 4px rgba(110, 110, 110, 0.1), 0 4px 4px rgba(98, 98, 98, 0.1);
@@ -86,7 +91,7 @@ const Post = ({track, artist, album, artwork,memo}) => {
         {/* <Preview controls = "controls" src = {post.preview}/> */}
             <Title>{track}</Title>
             
-            <Artist>{artist}</Artist>
+            <Artist>{artist} </Artist>
             <Album>{album}</Album>
         
             <MemoBox>{memo}</MemoBox>

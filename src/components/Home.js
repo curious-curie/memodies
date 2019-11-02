@@ -48,7 +48,7 @@ export default class Home extends Component {
                 {this.state.posts.map((post) => {
               return (
                 <Item>
-                <Post key = {post.id} artist = {post.artist} album = {post.album} track = {post.track} artwork = {post.artwork} memo = {post.memo}/>
+                <Post key = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} memo = {post.memo}/>
                 </Item> )})}
                 
             </PostsWrapper>
