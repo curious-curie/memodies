@@ -4,9 +4,12 @@ import PostForm from './PostForm';
 import styled from 'styled-components';
 import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
 import axios from 'axios';
+import Loader from './Loader'
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000/api/';
+
+
 
 const Wrapper = styled.div`
 text-align: center;
@@ -75,10 +78,18 @@ export default class Search extends Component {
             selected: [],
             memo: '',
             isSearching: true,
+            loading: false,
         }
 
     }
 
+    hideLoader = () => {
+        this.setState({ loading: false });
+      }
+    
+      showLoader = () => {
+        this.setState({ loading: true });
+      }
 
     handleChange = (e) => {
         this.setState({
@@ -117,7 +128,8 @@ export default class Search extends Component {
    handleClick(i){
        this.setState( (state) => ({
            isSearching: !state.isSearching,
-           selected: i
+           selected: i,
+           loading: false,
        }));
    }
 
@@ -130,6 +142,8 @@ export default class Search extends Component {
 
     search = () => {
 
+        this.showLoader();
+
         let searchTerm = JSON.stringify(this.state.searchTerm).replace(/\s/g, '+')
         const api = `https://itunes.apple.com/search?term=${searchTerm}&entity=musicTrack`;
 
@@ -139,8 +153,6 @@ export default class Search extends Component {
             trackName: '',
             collectionName: '',
             artwork: '',
-            selected: [],
-            isSearching: true,
         }
 
         this.setState(prevState => ({
@@ -152,7 +164,7 @@ export default class Search extends Component {
 
 
 
-
+        
         fetch(`${api}`)
         .then(results =>{
             return results.json();
@@ -180,8 +192,9 @@ export default class Search extends Component {
 
                 )
             })
+            this.hideLoader();
 
-    });
+        }).catch((err)=> this.hideLoader());
 
     }
 
@@ -211,7 +224,7 @@ export default class Search extends Component {
 
                 <SearchButton type="button" onClick={()=>this.search()}> <SearchAlt/></SearchButton> </Block> </form>
 
-
+                {(this.state.loading) ? <Loader /> : null}
                 { this.state.results.map( item => <SearchListItem key={item.trackId} onClick={() => this.handleClick(item)} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
 
                 </div>
