@@ -8,12 +8,19 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
 
 const PostsWrapper = styled.div`
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    @media(max-width: 799px){
+        flex-direction: column;
+    }
+    text-align: center;
     @media (min-width: 800px) {
-        flex-direction: row;
-      }
-`
-
+        flex-wrap: wrap;
+    }
+`;
+const Item = styled.li`
+    list-style: none;
+    flex: 0 0 20%;
+`;
 export default class Home extends Component {
 
     constructor(props) {
@@ -37,11 +44,13 @@ export default class Home extends Component {
 
         return (
             <PostsWrapper>
-                { console.log(this.state.posts) }
+                
                 {this.state.posts.map((post) => {
               return (
+                <Item>
                 <Post key = {post.id} artist = {post.artist} album = {post.album} track = {post.track} artwork = {post.artwork} memo = {post.memo}/>
-                  )})}
+                </Item> )})}
+                
             </PostsWrapper>
         )
     }
