@@ -3,19 +3,20 @@ import SearchListItem from './SearchListItem';
 import PostForm from './PostForm';
 import styled from 'styled-components';
 import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
+import Axios from 'axios';
 
 const Wrapper = styled.div`
 text-align: center;
 `;
 
 const SearchInput = styled.input`
-    
+
     width: 80%;
     @media (min-width: 500px) {
         width: 400px;
     }
     padding: 5px;
-    
+
     font-size: 1.2rem;
     border: none;
     border-bottom: 1px solid gray;
@@ -59,19 +60,19 @@ const PostFormWrapper = styled.div`
 
 
 export default class Search extends Component {
-    
+
 
     constructor(){
         super();
         this.state = {
             searchTerm: '',
             results: [
-            
+
             ],
             selected: [],
             isSearching: true,
         }
-       
+
     }
 
 
@@ -95,12 +96,12 @@ export default class Search extends Component {
        this.search();
        // put the login here
     }};
-  
+
     search = () => {
 
         let searchTerm = JSON.stringify(this.state.searchTerm).replace(/\s/g, '+')
         const api = `https://itunes.apple.com/search?term=${searchTerm}&entity=musicTrack`;
-        
+
         let eachItem = {
             id: '',
             artistName: '',
@@ -117,14 +118,15 @@ export default class Search extends Component {
             isSearching: true,
         }));
 
-        
-       
-     
+
+
+
         fetch(`${api}`)
         .then(results =>{
             return results.json();
         }).then(data => {
             console.log(searchTerm + ":" + data)
+       
             data.results.forEach(item => {
                 eachItem = {
                     id: '',
@@ -132,23 +134,23 @@ export default class Search extends Component {
                     trackName: '',
                     collectionName: '',
                     artwork: '',
-                    
+
                 }
                 eachItem['id'] = item.trackId
                 eachItem['artistName'] = item.artistName
                 eachItem['trackName'] = item.trackName
                 eachItem['collectionName'] = item.collectionName
                 eachItem['artwork'] = item.artworkUrl100
-                
+
                 this.setState(prevState => ({
                     results: [...prevState.results, eachItem]
                 })
-                   
+
                 )
             })
-            
+
     });
-    
+
     }
 
     searchAgain = () => {
@@ -160,44 +162,42 @@ export default class Search extends Component {
         }));
     }
 
-   
-
-    
-
+ 
     render() {
-       
+
         return (
             <Wrapper>
 
                 { !this.state.isSearching &&
                     <section><BackButton type = "button" onClick={this.searchAgain}>← Back To Search</BackButton></section> }
-                { this.state.isSearching && 
+                { this.state.isSearching &&
                 <div>
                 <form >
-                <Block> <SearchInput type="text"  onKeyDown = {this.handleKey} onChange={this.handleChange} value={this.state.searchTerm} placeholder="Search by title / artist"/> 
-                
+                <Block> <SearchInput type="text"  onKeyDown = {this.handleKey} onChange={this.handleChange} value={this.state.searchTerm} placeholder="Search by title / artist"/>
 
-                <SearchButton type="button" onClick={()=>this.search()}> <SearchAlt/></SearchButton> </Block> </form> 
-                   
-                
+
+                <SearchButton type="button" onClick={()=>this.search()}> <SearchAlt/></SearchButton> </Block> </form>
+
+
                 { this.state.results.map( item => <SearchListItem key={item.trackId} onClick={() => this.handleClick(item)} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
-                
+
                 </div>
                 }
-       
 
-                { !this.state.isSearching && 
+
+                { !this.state.isSearching &&
                 <PostFormWrapper>
                   <PostForm
-                  id ={this.state.selected['id']} 
-                  artist={this.state.selected['artistName']} 
+                  id ={this.state.selected['id']}
+                  artist={this.state.selected['artistName']}
                   track = {this.state.selected['trackName']}
                   artwork = {this.state.selected['artwork']}
-                  album = {this.state.selected['collectionName']} />
+                  album = {this.state.selected['collectionName']} 
+                  onCreate = {this.handleSubmit} />
                 </PostFormWrapper>
                 }
 
-                  
+
             </Wrapper>
         )
     }

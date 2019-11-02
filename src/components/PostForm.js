@@ -60,7 +60,7 @@ const PostForm = ({track, artist, album, artwork, onCreate, onChange}) => {
     
     return (
         <div>
-            <form autoComplete="off" onSubmit = {onCreate}>
+            <form autoComplete="off" onSubmit = {this.handleSubmit}>
                 <input type="hidden" name="artwork" value ={artwork || ''}/>
 
                 <img src = {artwork} alt="img"/>
