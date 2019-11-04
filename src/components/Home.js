@@ -9,6 +9,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
 
 const PostsWrapper = styled.div`
     display: flex;
+    float: center;
     justify-content: center;
     @media(max-width: 799px){
         flex-direction: column;
@@ -24,8 +25,15 @@ const Item = styled.li`
 `;
 
 const SearchWrapper = styled.div`
-position: absolute;
-display: inline-block;
+
+@media(max-width: 799px){
+    float: center;
+}
+@media (min-width: 800px) {
+    position: absolute;
+    right: 0px;
+}
+
 top: 80px;
 `;
 export default class Home extends Component {
@@ -83,9 +91,10 @@ export default class Home extends Component {
 
         return (
             <>
+                <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
+
             <PostsWrapper>
 
-                <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
                 
                 {filteredPosts.map((post) => {
               return (

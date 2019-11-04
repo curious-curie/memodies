@@ -4,15 +4,16 @@ import styled from 'styled-components';
 
 const BigWrapper = styled.div`
 text-align:right;
+height: 60px;
 `;
 
 const SearchWrapper = styled.div`
 display:inline-block
 margin: 40px;
 margin-right: 50px;
-width: 80%;
+width: 70%;
 @media (min-width: 500px) {
-    width: 400px;
+    width: 330px;
 }
 height: 46px;
 padding: 5px;
@@ -26,14 +27,17 @@ const SearchInput = styled.input`
     display: inline-block;
     text-align: left;
     font-size: 1.2rem;
-    width: 300px;
+    width: 250px;
     height: 40px;
     border: none;
     outline: none;
-    
     `;
 const SearchButton = styled.button`
     position: relative;
+    display: inline-block;
+    @media (max-width: 500px) {
+        top: -44px;
+    }
     width: 50px;
     height: 50px;
     border: none;
