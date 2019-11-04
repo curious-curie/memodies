@@ -6,7 +6,7 @@ import Home from './components/Home';
 import New from './components/New'
 import Header from './components/Header';
 import axios from 'axios';
-import Search from './components/Search'
+import Main from './components/Main'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -29,21 +29,18 @@ export default class App extends Component {
 
   render() {
     return (
-      
-        <Router>
    
-    <Route path = "/home" component = {App}/>
+     
+    <Router>
+       <Header/>
+     <div>
+    <Route exact path = "/" component = {Main}/>
     <Route path = "/new" component = {New}/>
 
-    <Header/>
-    <div>
-      
-        <Home searchWord= {this.state.searchWord}/>
-       <Link to = "/new"><AddButton/></Link>
-
-  
+   
     </div>
     </Router>
+   
    
     )
   }

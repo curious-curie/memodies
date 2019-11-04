@@ -26,7 +26,7 @@ const Header = () => {
     return (
       <>
      
-       <StyledLink to = "/home"><Title>Memodies</Title></StyledLink>
+       <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
       </>
     );
 };
