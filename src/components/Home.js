@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import Post from './Post'
 import axios from 'axios';
+import Search from './Search'
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
@@ -26,7 +27,8 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: []
+            posts: [],
+            searchInput: '',
         }
     }
 
@@ -43,6 +45,8 @@ export default class Home extends Component {
     render() {
 
         return (
+            <>
+            <Search onChange = {this.handleSearchChange}/>
             <PostsWrapper>
                 
                 {this.state.posts.map((post) => {
@@ -52,6 +56,7 @@ export default class Home extends Component {
                 </Item> )})}
                 
             </PostsWrapper>
+            </>
         )
     }
 }

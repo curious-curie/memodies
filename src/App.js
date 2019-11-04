@@ -3,7 +3,7 @@ import './App.css';
 import AddButton from './components/AddButton';
 import { Link } from 'react-router-dom';
 import Home from './components/Home';
-import Search from './components/Search'
+import New from './components/New'
 import Header from './components/Header';
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -20,7 +20,7 @@ function App() {
     <Router>
       <Header/>
     <Route exact path = "/" component = {Home}/>
-    <Route path = "/new" component = {Search}/>
+    <Route path = "/new" component = {New}/>
     <div>
       
   

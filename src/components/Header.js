@@ -18,7 +18,10 @@ color:black;
     }`;
 const Header = () => {
     return (
+      <>
+     
        <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
+      </>
     );
 };
 
