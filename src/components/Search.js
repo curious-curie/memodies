@@ -63,21 +63,23 @@ export default class Search extends Component {
         }
     }
 
-    searchOpen = (state) => {
-        this.setState({
-            isOpen: !state.isOpen
-        })
-    }
+   
+      
+    
 
-
+      handleKeyDown = (e) => {
+        e.preventDefault();
+        if(e.keyCode === 13) this.searchOpen();
+      }
+      
     render() {
         return (
             <BigWrapper>
-            {this.state.isOpen && <SearchWrapper>
-                <SearchInput type="text" onChange = {this.props.handleSearchChange}/><SearchButton type="button" onClick={this.props.handleSearch}> <SearchAlt/></SearchButton>
+            {this.props.isOpen && <SearchWrapper>
+                <SearchInput autoFocus = "autoFocus" placeholder="Search..." type="text"  onKeyDown= {this.props.onChange}/><SearchButton type="button" onKeyDown = {this.handleKeyDown} onClick={this.props.searchToggle}> <SearchAlt/></SearchButton>
              </SearchWrapper>}
 
-             {!this.state.isOpen &&  <SearchButtonClosed type="button" onClick={this.searchOpen}> <SearchAlt/></SearchButtonClosed>}
+             {!this.props.isOpen &&  <SearchButtonClosed type="button" onClick={this.props.searchToggle}> <SearchAlt/></SearchButtonClosed>}
             </BigWrapper>
         )
     }

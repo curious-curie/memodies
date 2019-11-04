@@ -20,7 +20,7 @@ const Header = () => {
     return (
       <>
      
-       <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
+       <StyledLink to = "/home"><Title>Memodies</Title></StyledLink>
       </>
     );
 };
