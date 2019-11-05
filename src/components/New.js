@@ -108,6 +108,7 @@ export default class Search extends Component {
             artwork : this.state.selected['artwork'],
             album : this.state.selected['collectionName'],
             memo: this.state.memo,
+            preview: this.state.selected['previewUrl'],
         }).then(res => {
             this.props.history.push('/');
         })
@@ -131,6 +132,7 @@ export default class Search extends Component {
            selected: i,
            loading: false,
        }));
+       console.log(this.state.selected)
    }
 
    handleKey = (e) => {
@@ -185,6 +187,7 @@ export default class Search extends Component {
                 eachItem['trackName'] = item.trackName
                 eachItem['collectionName'] = item.collectionName
                 eachItem['artwork'] = item.artworkUrl100
+                eachItem['previewUrl'] = item.previewUrl
 
                 this.setState(prevState => ({
                     results: [...prevState.results, eachItem]
@@ -239,6 +242,7 @@ export default class Search extends Component {
                   track = {this.state.selected['trackName']}
                   artwork = {this.state.selected['artwork']}
                   album = {this.state.selected['collectionName']} 
+                  preview = {this.state.selected['previewUrl']}
                   handleSubmit = {this.handleSubmit} 
                   getMemo = {this.getMemo} />
                 </PostFormWrapper>

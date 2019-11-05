@@ -91,6 +91,7 @@ export default class PostForm extends Component {
    
             <form autoComplete="off">
                 <input type="hidden" name="artwork" value ={this.props.artwork || ''}/>
+                <input type="hidden" name="preview" value ={this.props.preview || ''} readOnly/>
 
                 <img src = {this.props.artwork} alt="img"/>
     

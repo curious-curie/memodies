@@ -77,11 +77,20 @@ export default class Home extends Component {
         })
       }
 
+    // handleClick = (e) => {
+
+    //     console.log(e.target.alt)
+    //     let id = e.target.alt 
+    //     this.setState({
+    //         playingTrack: id
+    //     }, () => {this.play(id);});
+    // }
+
+
     render() {
 
         let filteredPosts = this.state.posts.filter(post => {
             const query = this.state.searchWord.trim().toLowerCase();
-            console.log(query)
             return (
                 post.title.toLowerCase().includes(query) ||
                 post.album.toLowerCase().includes(query) ||
@@ -94,12 +103,11 @@ export default class Home extends Component {
                 <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
 
             <PostsWrapper>
-
                 
                 {filteredPosts.map((post) => {
               return (
                 <Item>
-                <Post key = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} memo = {post.memo}/>
+                <Post onClick = {this.handleClick} key = {post.id} id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
                 </Item> )})}
                 
             </PostsWrapper>

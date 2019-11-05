@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-
+import Preview from './Preview'
 
 const Wrapper = styled.div`
     min-width: 300px;
@@ -71,24 +71,21 @@ const MemoBox = styled.div`
     line-height: 1.4;
 `;
 
-// const Preview = styled.audio`
-//     color: white;
-// `;
 
-const Post = ({track, artist, album, artwork,memo}) => {
+const Post = ({id,track, preview, artist, album, artwork,memo, onClick}) => {
 
     
     return (
         <Wrapper>
             <CD>
         
-                <TrackImage src = {artwork} alt="album artwork"/>
+                <TrackImage onClick ={onClick} src = {artwork} alt={id}/>
                 
                 <Circle/>
                 
             </CD>
         
-        {/* <Preview controls = "controls" src = {post.preview}/> */}
+        <Preview url = {preview}/>
             <Title>{track}</Title>
             
             <Artist>{artist} </Artist>
