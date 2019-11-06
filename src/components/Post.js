@@ -1,6 +1,10 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components';
 import Preview from './Preview'
+import {DeleteBin} from 'styled-icons/remix-fill/DeleteBin';
+import {Edit} from 'styled-icons/boxicons-solid/Edit';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const Wrapper = styled.div`
     min-width: 300px;
@@ -71,9 +75,71 @@ const MemoBox = styled.div`
     line-height: 1.4;
 `;
 
+const PostFooterWrapper = styled.div`
+margin-bottom: 10px;
+text-align: left;
+margin-right: 15px;
 
-const Post = ({id,track, preview, artist, album, artwork,memo, onClick}) => {
+`;
 
+const HoverEdit = styled(Edit)`
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+    margin-right: 10px;
+    margin-left: 10px;
+`;
+
+const HoverDeleteBin = styled(DeleteBin)`
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+`;
+
+export default class Post extends Component {
+
+    // componentDidMount(){
+    //     if(!this.state.updated){
+    //     this.setState({
+    //         updated: !this.state.updated,
+    //     });
+    //     console.log("cdm:" , this.state.updated)
+    // }
+       
+    // }
+
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         updated: false,
+    //     }
+    // }
+
+    
+    handleRemove = ()  => {
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+        const id = this.props.id;
+        const url = `http://localhost:8000/api/posts/${id}/`;
+        
+        console.log(id);
+        axios.delete(url).then(res => 
+             console.log(res) )
+
+        .catch(err => console.log(err));}
+    }
+
+    // updatePost() {
+    //     alert("UPDATE");
+    //     this.setState({
+    //         updated: !this.state.updated,
+    //     })
+    // }
+
+    render(){
+
+    const {id,track, preview, artist, album, artwork,memo, onClick, handleEdit} = this.props;
     
     return (
         <Wrapper>
@@ -93,9 +159,13 @@ const Post = ({id,track, preview, artist, album, artwork,memo, onClick}) => {
         
             <MemoBox>{memo}</MemoBox>
 
+
+            <PostFooterWrapper>
+           
+           <HoverEdit size = "25" title="edit post" onClick = {handleEdit}/>
+           <HoverDeleteBin size="25" title="delete post" onClick = {this.handleRemove}/>
+            </PostFooterWrapper>
         </Wrapper>
        
-    );
-};
-
-export default Post;
+    )};
+}

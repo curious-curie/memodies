@@ -51,6 +51,10 @@ export default class Home extends Component {
         this.refreshList();
     }
 
+    componentDidUpdate(){
+        this.refreshList();
+    }
+
     refreshList = () => {
         axios.get("posts/")
         .then(res => this.setState({ posts: res.data}))
@@ -107,7 +111,7 @@ export default class Home extends Component {
                 {filteredPosts.map((post) => {
               return (
                 <Item>
-                <Post onClick = {this.handleClick} key = {post.id} id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
+                <Post handleRemove = {this.handleRemove} onClick = {this.handleClick} key = {post.id} id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
                 </Item> )})}
                 
             </PostsWrapper>
