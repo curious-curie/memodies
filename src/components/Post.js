@@ -75,6 +75,25 @@ const MemoBox = styled.div`
     line-height: 1.4;
 `;
 
+const MemoInput = styled.input`
+    font-size: 12px;
+    color: black;
+    text-indent: 1em;
+    text-align: justified;
+    margin: 15px;
+    background: whitesmoke;
+    border-radius: 5px;
+    line-height: 1.4;
+    outline: none;
+    border: none;
+    width: 260px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow-wrap: break-word
+    white-space: initial;
+`;
+
 const PostFooterWrapper = styled.div`
 margin-bottom: 10px;
 text-align: left;
@@ -98,54 +117,27 @@ const HoverDeleteBin = styled(DeleteBin)`
     }
 `;
 
+const EditButton = styled.button`
+    border: none;
+    background: whitesmoke;
+    border-radius: 20px; 
+    width: 50px;
+    height: 20px;
+`;
+
 export default class Post extends Component {
 
-    // componentDidMount(){
-    //     if(!this.state.updated){
-    //     this.setState({
-    //         updated: !this.state.updated,
-    //     });
-    //     console.log("cdm:" , this.state.updated)
-    // }
-       
-    // }
 
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         updated: false,
-    //     }
-    // }
-
+    render(){ 
     
-    handleRemove = ()  => {
-        if (window.confirm('Are you sure you wish to delete this item?')) {
-        const id = this.props.id;
-        const url = `http://localhost:8000/api/posts/${id}/`;
-        
-        console.log(id);
-        axios.delete(url).then(res => 
-             console.log(res) )
-
-        .catch(err => console.log(err));}
-    }
-
-    // updatePost() {
-    //     alert("UPDATE");
-    //     this.setState({
-    //         updated: !this.state.updated,
-    //     })
-    // }
-
-    render(){
-
-    const {id,track, preview, artist, album, artwork,memo, onClick, handleEdit} = this.props;
+console.log(this.props.onClick)
+    const {id,track, preview, artist, album, artwork,memo} = this.props;
     
     return (
         <Wrapper>
             <CD>
         
-                <TrackImage onClick ={onClick} src = {artwork} alt={id}/>
+                <TrackImage src = {artwork} alt={id}/>
                 
                 <Circle/>
                 
@@ -157,13 +149,15 @@ export default class Post extends Component {
             <Artist>{artist} </Artist>
             <Album>{album}</Album>
         
-            <MemoBox>{memo}</MemoBox>
-
+            { !(this.props.editing === id) && <MemoBox>{memo}</MemoBox>}
+            { (this.props.editing === id) && <><MemoInput onChange = {this.props.handleEditText} type="text" placeholder = {memo}/>
+            <EditButton onClick = {this.props.submitEdit}>Edit</EditButton></>}
 
             <PostFooterWrapper>
            
-           <HoverEdit size = "25" title="edit post" onClick = {handleEdit}/>
-           <HoverDeleteBin size="25" title="delete post" onClick = {this.handleRemove}/>
+           <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>
+          
+           <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>
             </PostFooterWrapper>
         </Wrapper>
        

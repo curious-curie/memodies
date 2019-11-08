@@ -44,6 +44,8 @@ export default class Home extends Component {
             posts: [],
             searchWord: '',
             searchOpen: false,
+            editing: false,
+            editText: '',
         }
     }
 
@@ -52,7 +54,7 @@ export default class Home extends Component {
     }
 
     componentDidUpdate(){
-        this.refreshList();
+        // this.refreshList();
     }
 
     refreshList = () => {
@@ -81,15 +83,50 @@ export default class Home extends Component {
         })
       }
 
-    // handleClick = (e) => {
 
-    //     console.log(e.target.alt)
-    //     let id = e.target.alt 
-    //     this.setState({
-    //         playingTrack: id
-    //     }, () => {this.play(id);});
-    // }
+    handleRemove  = (id) => event => {
+        
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+            const url = `http://localhost:8000/api/posts/${id}/`;
+            
+            console.log(id);
+            axios.delete(url).then(res => 
+                 console.log(res) )
+    
+            .catch(err => console.log(err));}
 
+        this.setState({
+            posts: this.state.posts.filter(post => post.id !== id)
+        })
+    }
+
+    onEdit = (id) => event => {
+        this.setState(
+            {editing: id,}
+        )
+    }
+
+    submitEdit = (id) => event => {
+
+        const url = `http://localhost:8000/api/posts/${id}/`;
+        console.log(this.state.editText)
+        axios.patch(url, {"memo": this.state.editText}).then(
+            res => {console.log(res); 
+                this.setState({
+                    posts: this.state.posts.map(post => id === post.id? { ...post, "memo": this.state.editText} : post ),
+                    editing: -1,
+                    editText: '',
+             });
+            })
+       .catch(err => console.log(err));
+     
+    }
+
+    handleEditText = e => {
+        this.setState(
+            {editText: e.target.value,}
+        )
+    }
 
     render() {
 
@@ -111,7 +148,10 @@ export default class Home extends Component {
                 {filteredPosts.map((post) => {
               return (
                 <Item>
-                <Post handleRemove = {this.handleRemove} onClick = {this.handleClick} key = {post.id} id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
+                <Post editing = {this.state.editing} handleEditText = {this.handleEditText} 
+                onEdit = {this.onEdit(post.id)} submitEdit = {this.submitEdit(post.id)}
+                onRemove = {this.handleRemove(post.id)} 
+                key = {post.id} id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
                 </Item> )})}
                 
             </PostsWrapper>
