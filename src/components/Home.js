@@ -91,13 +91,13 @@ export default class Home extends Component {
             
             console.log(id);
             axios.delete(url).then(res => 
-                 console.log(res) )
+                {this.setState({
+                    posts: this.state.posts.filter(post => post.id !== id)
+                })} )
     
             .catch(err => console.log(err));}
 
-        this.setState({
-            posts: this.state.posts.filter(post => post.id !== id)
-        })
+        
     }
 
     onEdit = (id) => event => {
@@ -147,11 +147,12 @@ export default class Home extends Component {
                 
                 {filteredPosts.map((post) => {
               return (
-                <Item>
-                <Post editing = {this.state.editing} handleEditText = {this.handleEditText} 
+                <Item key = {post.id}>
+                <Post key = {post.id} 
+                editing = {this.state.editing} handleEditText = {this.handleEditText} 
                 onEdit = {this.onEdit(post.id)} submitEdit = {this.submitEdit(post.id)}
                 onRemove = {this.handleRemove(post.id)} 
-                key = {post.id} id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
+                id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
                 </Item> )})}
                 
             </PostsWrapper>

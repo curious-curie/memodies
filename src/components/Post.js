@@ -130,7 +130,6 @@ export default class Post extends Component {
 
     render(){ 
     
-console.log(this.props.onClick)
     const {id,track, preview, artist, album, artwork,memo} = this.props;
     
     return (
