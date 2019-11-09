@@ -39,7 +39,7 @@ const SearchButton = styled.button`
     position: relative;
     float: right;
     display: inline-block;
-    @media (max-width: 500px) {
+    @media (max-width: 1000px) {
         top: -44px;
     }
     width: 50px;
