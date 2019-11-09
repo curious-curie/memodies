@@ -98,7 +98,7 @@ export default class PostForm extends Component {
                 <Title type="text" name = "track" value={this.props.track || ''}  readOnly/>
                 <Sub type="text" name = "artist" value={this.props.artist || ''} readOnly/>
                 <Subsub type="text" name = "album" value={this.props.album || ''} readOnly/>
-                <Memo type="text" name = "memo" onChange = {this.props.getMemo} placeholder ="write your memo here"/>
+                <Memo ref = "Memo" type="text" name = "memo" onChange = {this.props.getMemo} placeholder ="write your memo here"/>
                 <div><PostButton onClick={this.props.handleSubmit} className="add">Post</PostButton></div>
             </form>
             

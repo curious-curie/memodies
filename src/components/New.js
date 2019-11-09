@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
 import axios from 'axios';
 import Loader from './Loader'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { searchReset, searchTracks, selectTrack, postSubmit } from '../action'
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000/api/';
@@ -65,192 +68,100 @@ const PostFormWrapper = styled.div`
 
 
 
-export default class Search extends Component {
+class New extends Component {
 
 
-    constructor(){
-        super();
-        this.state = {
-            searchTerm: '',
-            results: [
-
-            ],
-            selected: [],
-            memo: '',
-            isSearching: true,
-            loading: false,
-        }
-
-    }
-
-    hideLoader = () => {
-        this.setState({ loading: false });
-      }
+   componentDidMount(){
+       this.props.dispatch(searchReset());
+   }
     
-      showLoader = () => {
-        this.setState({ loading: true });
-      }
-
-    handleChange = (e) => {
-        this.setState({
-            searchTerm: e.target.value,
-        });
-
-    }
+    handleSubmit = (selected, memo) => {
+        this.props.dispatch(postSubmit(selected,memo,this.props.history));
     
-    handleSubmit = (e) => {
-        e.preventDefault();
-        if(this.state.memo === '') alert("please write a memo!")
-        else{
-        axios.post('posts/', {
-            artist: this.state.selected['artistName'],
-            title : this.state.selected['trackName'],
-            artwork : this.state.selected['artwork'],
-            album : this.state.selected['collectionName'],
-            memo: this.state.memo,
-            preview: this.state.selected['previewUrl'],
-        }).then(res => {
-            this.props.history.push('/');
-        })
-        .catch(error => {
-            console.log(error)
-        });
-
-    }
     }
 
     getMemo = (e) => {
         this.setState({
             memo: e.target.value,
         })
-        
     }
 
-   handleClick(i){
-       this.setState( (state) => ({
-           isSearching: !state.isSearching,
-           selected: i,
-           loading: false,
-       }));
-       console.log(this.state.selected)
-   }
 
    handleKey = (e) => {
     if(e.keyCode === 13){
         e.preventDefault();
-       this.search();
+    //    this.search();
+        console.log(e.target.value)
+        this.search(e.target.value)
        // put the login here
     }};
 
-    search = () => {
+    search = (input) => {
 
-        this.showLoader();
-
-        let searchTerm = JSON.stringify(this.state.searchTerm).replace(/\s/g, '+')
-        const api = `https://itunes.apple.com/search?term=${searchTerm}&entity=musicTrack`;
-
-        let eachItem = {
-            id: '',
-            artistName: '',
-            trackName: '',
-            collectionName: '',
-            artwork: '',
-        }
-
-        this.setState(prevState => ({
-            searchTerm: '',
-            results: [],
-            memo: '',
-            isSearching: true,
-        }));
-
-
-
-        
-        fetch(`${api}`)
-        .then(results =>{
-            return results.json();
-        }).then(data => {
-            console.log(searchTerm + ":" + data)
-       
-            data.results.forEach(item => {
-                eachItem = {
-                    id: '',
-                    artistName: '',
-                    trackName: '',
-                    collectionName: '',
-                    artwork: '',
-
-                }
-                eachItem['id'] = item.trackId
-                eachItem['artistName'] = item.artistName
-                eachItem['trackName'] = item.trackName
-                eachItem['collectionName'] = item.collectionName
-                eachItem['artwork'] = item.artworkUrl100
-                eachItem['previewUrl'] = item.previewUrl
-
-                this.setState(prevState => ({
-                    results: [...prevState.results, eachItem]
-                })
-
-                )
-            })
-            this.hideLoader();
-
-        }).catch((err)=> this.hideLoader());
+    this.props.dispatch(searchTracks(input));
 
     }
 
-    searchAgain = () => {
-        this.setState( (state) => ({
-            searchTerm: '',
-            results: [],
-            isSearching: true,
-            memo: '',
-            selected: [],
-        }));
-    }
 
+    
  
     render() {
 
         return (
             <Wrapper>
+ 
 
-                { !this.state.isSearching &&
-                    <section><BackButton type = "button" onClick={this.searchAgain}>← Back To Search</BackButton></section> }
-                { this.state.isSearching &&
+                { !this.props.isSearching &&
+                    <section><BackButton type = "button" onClick={() => this.props.dispatch(searchTracks(''))}>← Back To Search</BackButton></section> } 
+                { this.props.isSearching &&
                 <div>
                 <form >
-                <Block> <SearchInput type="text"  onKeyDown = {this.handleKey} onChange={this.handleChange} value={this.state.searchTerm} placeholder="Search by title / artist"/>
+                <Block> <SearchInput 
+                ref={ref => {
+                this.SearchInput = ref; }}
+                 type="text" onKeyDown = {this.handleKey} 
+                 placeholder="Search by title / artist"/>
 
 
-                <SearchButton type="button" onClick={()=>this.search()}> <SearchAlt/></SearchButton> </Block> </form>
+                <SearchButton type="button" onClick={()=>this.search(this.SearchInput.value)}> <SearchAlt/></SearchButton> </Block> </form>
 
-                {(this.state.loading) ? <Loader /> : null}
-                { this.state.results.map( item => <SearchListItem key={item.id} onClick={() => this.handleClick(item)} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
+                {(this.props.loading) ? <Loader /> : null}
+                { this.props.results.map( item => <SearchListItem key={item.id} onClick={() => this.props.dispatch(selectTrack(item))} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
 
                 </div>
                 }
 
 
-                { !this.state.isSearching &&
+                { !this.props.isSearching &&
                 <PostFormWrapper>
                   <PostForm
-                  key = {this.state.selected['id']}
-                  id ={this.state.selected['id']}
-                  artist={this.state.selected['artistName']}
-                  track = {this.state.selected['trackName']}
-                  artwork = {this.state.selected['artwork']}
-                  album = {this.state.selected['collectionName']} 
-                  preview = {this.state.selected['previewUrl']}
-                  handleSubmit = {this.handleSubmit} 
-                  getMemo = {this.getMemo} />
+                  key = {this.props.selected['id']}
+                  id ={this.props.selected['id']}
+                  artist={this.props.selected['artistName']}
+                  track = {this.props.selected['trackName']}
+                  artwork = {this.props.selected['artwork']}
+                  album = {this.props.selected['collectionName']} 
+                  preview = {this.props.selected['previewUrl']}
+                handleSubmit = {() => this.handleSubmit(this.props.selected, this.state.memo)} 
+                 getMemo = {this.getMemo} />
                 </PostFormWrapper>
-                }
+                } 
 
 
             </Wrapper>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        results: state.results,
+        err: state.err,
+        selected: state.selected,
+        memo: state.memo,
+        loading: state.loading,
+        isSearching: state.isSearching,
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(New));
