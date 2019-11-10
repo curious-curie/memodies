@@ -13,7 +13,7 @@ const postReducer = (
         case('GET_POSTS'):
         return {
             ...state,
-            loading: 'abc',
+            loading: false,
         }
         case ('REFRESH_LIST_SUCCESS'):
             return {
@@ -23,7 +23,6 @@ const postReducer = (
                 posts: action.posts,
             }
         case('REFRESH_LIST_ERROR'):
-        alert("ERROR")
         return {
             ...state,
             loading: false, 
@@ -68,6 +67,7 @@ const postReducer = (
         }
 
         case('POST_EDIT_ERROR'):
+    
         return {
             ...state,
             loading: false,

@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const refreshListSuccess = (posts) => {
 
-    console.log(posts)
 
     return {
         type: 'REFRESH_LIST_SUCCESS',
@@ -69,11 +68,9 @@ export const postDeleteError = (err) => {
 
 
 export const postEdit = (id, updatedMemo) => {
-
-    console.log(updatedMemo)
     const url = `http://localhost:8000/api/posts/${id}/`
     return (dispatch ) => { 
-        dispatch(postEditStart(id));
+       dispatch(postEditStart(id));
         axios.patch(url, {"memo": updatedMemo})
     .then(  res => {
             alert("Post Updated Successfully!");
@@ -88,6 +85,9 @@ export const postEdit = (id, updatedMemo) => {
 
 export const getPosts = () => {
     const url = `http://localhost:8000/api/posts/`
+    axios.get(url).then(res => {
+        console.log(res.data);
+    })
     return (dispatch) => {
         axios.get(url)
         .then(res => {

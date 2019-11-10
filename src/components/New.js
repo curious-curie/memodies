@@ -70,20 +70,29 @@ const PostFormWrapper = styled.div`
 
 class New extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            memo: '',
+        }
+    }
+
 
    componentDidMount(){
        this.props.dispatch(searchReset());
    }
     
     handleSubmit = (selected, memo) => {
+        console.log(memo);
         this.props.dispatch(postSubmit(selected,memo,this.props.history));
-    
     }
 
     getMemo = (e) => {
         this.setState({
             memo: e.target.value,
         })
+        console.log(e.target.value)
+        console.log(this.state.memo)
     }
 
 
@@ -142,8 +151,8 @@ class New extends Component {
                   artwork = {this.props.selected['artwork']}
                   album = {this.props.selected['collectionName']} 
                   preview = {this.props.selected['previewUrl']}
-                handleSubmit = {() => this.handleSubmit(this.props.selected, this.state.search.memo)} 
-                 getMemo = {this.getMemo} />
+                  handleSubmit = {() => this.handleSubmit(this.props.selected, this.state.memo)} 
+                  getMemo = {this.getMemo} />
                 </PostFormWrapper>
                 } 
 

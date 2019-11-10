@@ -84,6 +84,7 @@ export const postSubmit = (selected, memo, history) => {
            dispatch(postSuccess(history));
        })
        .catch(err => {
+           alert(err);
            console.log(err);
            dispatch(postError());
        });
@@ -130,6 +131,7 @@ export const searchTracks = (searchWord) => {
         })
         console.log(searchResults)
         dispatch(searchTracksSuccess(searchResults));
-    });
+    })
+    .catch(err => alert("ERROR!"));
 }
 }

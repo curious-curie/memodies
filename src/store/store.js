@@ -1,12 +1,14 @@
 import {combineReducers, createStore, compose, applyMiddleware} from 'redux';
 import searchTracks from '../reducer/search-reducer';
 import postReducer from '../reducer/post-reducer'
+import auth from '../reducer/auth'
 
 import thunk from 'redux-thunk'
 
 const reducers = combineReducers({
   search: searchTracks,
-  post: postReducer
+  post: postReducer,
+  auth: auth,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

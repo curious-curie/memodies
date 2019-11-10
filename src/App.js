@@ -7,6 +7,8 @@ import New from './components/New'
 import Header from './components/Header';
 import axios from 'axios';
 import Main from './components/Main'
+import LoginForm from './components/auth/LoginForm'
+import RegisterForm from './components/auth/RegisterForm'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -36,6 +38,8 @@ export default class App extends Component {
      <div>
     <Route exact path = "/" component = {Main}/>
     <Route exact path = "/home" component = {Main}/>
+    <Route exact path = "/login" component = {LoginForm}/>
+    <Route exact path = "/signup" component = {RegisterForm}/>
     <Route path = "/new" component = {New}/>
 
    

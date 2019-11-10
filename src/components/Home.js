@@ -53,26 +53,18 @@ class Home extends Component {
             searchOpen: false,
             editText: '',
             error: '',
+            filteredPosts: [],
+            posts: [],
         }
     }
 
-    async componentDidMount() {
-        console.log(this.props)
-        console.log(this.props.posts)
-        try {
-          if (this.props.posts.length === 0) {
-              console.log("A")
-            await this.props.dispatch(getPosts())
-          }
-        } catch (e) {
-          this.setState({ error: e.message });
-        }
+    componentDidMount() {
+
+       
+        this.props.dispatch(getPosts());
+         
       }
    
-
-    componentDidUpdate(){
-        // this.refreshList();
-    }
 
     refreshList = () => {
         axios.get("posts/")
@@ -81,7 +73,7 @@ class Home extends Component {
     }
     
     search = (e) => {
-        console.log(e)
+    
         if(e.keyCode === 13){ 
             this.searchToggle();
         }
@@ -119,7 +111,7 @@ class Home extends Component {
 
  
     submitEdit = (id) => event => {
-        console.log("EDIT")
+     
         const updatedMemo = this.state.editText
         this.props.dispatch(postEdit(id, updatedMemo));
      
@@ -133,6 +125,8 @@ class Home extends Component {
 
     render() {
 
+    
+
         let filteredPosts = this.props.posts.filter(post => {
             const query = this.state.searchWord.trim().toLowerCase();
             return (
@@ -141,16 +135,14 @@ class Home extends Component {
                 post.artist.toLowerCase().includes(query)
             )
         });
-       
-       
+        
+
         return (
             <>
                 <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
             { this.props.loading && <LoaderWrapper><Loader/></LoaderWrapper>}
            
-    
             { !this.props.loading && <PostsWrapper>
-    
                 {filteredPosts.map((post) => {
               return (
                 <Item key = {post.id}>
