@@ -1,140 +1,90 @@
 import React, { Component } from 'react'
-import SearchListItem from './SearchListItem';
-import PostForm from './PostForm';
+import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
+import styled from 'styled-components';
+
+const BigWrapper = styled.div`
+text-align:right;
+height: 60px;
+`;
+
+const SearchWrapper = styled.div`
+display:inline-block
+margin: 40px;
+margin-right: 50px;
+width: 70%;
+@media (min-width: 500px) {
+    width: 330px;
+}
+height: 46px;
+padding: 5px;
+font-size: 1.2rem;
+border: none;
+border-bottom: 1px solid black;
+outline: none;
+`;
+
+const SearchInput = styled.input`
+    display: inline-block;
+    text-align: left;
+    font-size: 1.2rem;
+    width: 250px;
+    height: 40px;
+    border: none;
+    outline: none;
+    `;
+const SearchButton = styled.button`
+    position: relative;
+    display: inline-block;
+    @media (max-width: 500px) {
+        top: -44px;
+    }
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: white;
+
+`;
 
 
+const SearchButtonClosed = styled.button`
+    margin: 40px;
+    margin-left: 50px;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: white;
+`;
 export default class Search extends Component {
 
-    constructor(){
-        super();
+
+    constructor(props){
+        super(props);
         this.state = {
-            searchTerm: '',
-            results: [
-            
-            ],
-            selected: [],
-            isSearching: true,
+            isOpen: false,
         }
-       
-    }
-
-
-
-    handleChange = (e) => {
-        this.setState({
-            searchTerm: e.target.value,
-        });
-
-    }
-
-   handleClick(i){
-       this.setState( (state) => ({
-           isSearching: !state.isSearching,
-           selected: i
-       }));
-   }
-
- 
- 
-  
-    search = () => {
-
-        let searchTerm = JSON.stringify(this.state.searchTerm);
-    
-        console.log(searchTerm)
-        const api = `https://itunes.apple.com/search?term=${searchTerm}&entity=musicTrack`;
-        
-        let eachItem = {
-            id: '',
-            artistName: '',
-            trackName: '',
-            collectionName: '',
-            artwork: '',
-            selected: [],
-            isSearching: true,
-        }
-
-        this.setState(prevState => ({
-            searchTerm: '',
-            results: [],
-            isSearching: true,
-        }));
-
-        
-       
-     
-        fetch(`${api}`)
-        .then(results =>{
-            return results.json();
-        }).then(data => {
-            data.results.forEach(item => {
-                eachItem = {
-                    id: '',
-                    artistName: '',
-                    trackName: '',
-                    collectionName: '',
-                    artwork: '',
-                    
-                }
-                eachItem['id'] = item.trackId
-                eachItem['artistName'] = item.artistName
-                eachItem['trackName'] = item.trackName
-                eachItem['collectionName'] = item.collectionName
-                eachItem['artwork'] = item.artworkUrl100
-                
-                this.setState(prevState => ({
-                    results: [...prevState.results, eachItem]
-                })
-                   
-                )
-            })
-            
-    });
-    
-    }
-
-    searchAgain = () => {
-        this.setState( (state) => ({
-            searchTerm: '',
-            results: [],
-            isSearching: true,
-            selected: [],
-        }));
     }
 
    
-
+      
     
 
+      handleKeyDown = (e) => {
+        e.preventDefault();
+        if(e.keyCode === 13) this.searchOpen();
+      }
+      
     render() {
-       
         return (
-            <div>
+            <BigWrapper>
+            {this.props.isOpen && <SearchWrapper>
+                <SearchInput autoFocus = "autoFocus" placeholder="Search..." type="text"  onKeyDown= {this.props.onChange}/><SearchButton type="button" onKeyDown = {this.handleKeyDown} onClick={this.props.searchToggle}> <SearchAlt/></SearchButton>
+             </SearchWrapper>}
 
-                { this.state.isSearching && <div>
-                <form >
-                    <input type="text"  onChange={this.handleChange} value={this.state.searchTerm} placeholder="Search A Song"></input>
-                </form> 
-
-                <button type="button" onClick={()=>this.search()}>search</button>
-                    
-            
-                { this.state.results.map( item => <SearchListItem onClick={() => this.handleClick(item)} key={item.trackId} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
-                </div> }
-
-                { !this.state.isSearching &&
-                    <button type = "button" onClick={this.searchAgain}>search again</button> }
-
-                { !this.state.isSearching && 
-                  <PostForm 
-                  artist={this.state.selected['artistName']} 
-                  track = {this.state.selected['trackName']}
-                  artwork = {this.state.selected['artwork']}
-                  album = {this.state.selected['collectionName']} />
-                }
-
-                  
-            </div>
+             {!this.props.isOpen &&  <SearchButtonClosed type="button" onClick={this.props.searchToggle}> <SearchAlt/></SearchButtonClosed>}
+            </BigWrapper>
         )
     }
 }

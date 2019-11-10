@@ -1,118 +1,117 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import Post from './Post'
+import axios from 'axios';
+import Search from './Search'
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
 
 const PostsWrapper = styled.div`
     display: flex;
-    flex-direction: column;
+    float: center;
+    justify-content: center;
+    @media(max-width: 799px){
+        flex-direction: column;
+    }
+    text-align: center;
     @media (min-width: 800px) {
-        flex-direction: row;
-      }
-`
-const Wrapper = styled.div`
-    min-width: 300px;
-    margin: 50px;
-    padding-top: 10px;
-    width: 300px;
-    
-    border-radius: 10px;
-    overflow: hidden;
-    color: darkgray;
+        flex-wrap: wrap;
+    }
+`;
+const Item = styled.li`
+    list-style: none;
+    flex: 0 0 20%;
 `;
 
-const Title = styled.div`
-  margin: 5px;
-  font-weight: bold;
-  font-size: 1.5em;
-  text-align: center;
-`;
+const SearchWrapper = styled.div`
 
-const CD = styled.div`
-    position: relative;
-    width: 100%;
-    text-align: center;
- `;
-
-const TrackImage = styled.img`
-    width: 220px;
-    border-radius: 50%;
-    box-shadow: 0 4px 4px rgba(110, 110, 110, 0.1), 0 4px 4px rgba(98, 98, 98, 0.1);
- `;
-const Circle = styled.div`
+@media(max-width: 799px){
+    float: center;
+}
+@media (min-width: 800px) {
     position: absolute;
-    width: 30px;
-    height: 30px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.;
-    z-index: 2;
-    top: 95px;
-    left: 130px;
-    box-shadow: inset 0 2px 2px rgba(110, 110, 110, 0.25), 0 4px 4px rgba(98, 98, 98, 0.22);
+    right: 0px;
+}
+
+top: 80px;
 `;
-
-const Artist = styled.div`
-    text-align: center;
-`;
-
-const MemoBox = styled.div`
-    color: gray;
-    text-indent: 1em;
-    text-align: justified;
-    margin: 15px;
-    background: whitesmoke;
-    padding: 25px;
-    border-radius: 5px;
-    line-height: 1.4;
-`;
-
-const Preview = styled.audio`
-    color: white;
-`;
-
-
-
 export default class Home extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: [],
+            searchWord: '',
+            searchOpen: false,
+        }
+    }
+
+    componentDidMount(){
+        this.refreshList();
+    }
+
+    refreshList = () => {
+        axios.get("posts/")
+        .then(res => this.setState({ posts: res.data}))
+        .catch(err => console.log(err));
+    }
     
+    search = (e) => {
+        console.log(e)
+        if(e.keyCode === 13){ 
+            this.searchToggle();
+        }
+        else{
+        this.setState({
+            searchWord: e.target.value,
+        })
+        }
+    }
+
+    searchToggle = () => {
+        console.log(this.state.searchOpen)
+        this.setState({
+            searchOpen: !this.state.searchOpen,
+            searchWord: '',
+        })
+      }
+
+    // handleClick = (e) => {
+
+    //     console.log(e.target.alt)
+    //     let id = e.target.alt 
+    //     this.setState({
+    //         playingTrack: id
+    //     }, () => {this.play(id);});
+    // }
+
+
     render() {
 
-        const posts  = [
-            {'artist' :'Taylor Swift', 'track': 'All Too Well', 'album': 'Red', 
-            'artwork': 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e8/Taylor_Swift_-_Red.png/220px-Taylor_Swift_-_Red.png', 
-            'preview': 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview128/v4/70/d3/b2/70d3b24c-c1a0-58f5-9701-c593e424da00/mzaf_3987167571246207975.plus.aac.p.m4a',
-            'memo': 'My all-time favorite song.'},
-
-            {'artist' :'Taylor Swift', 'track': 'Daylight', 'album': 'Lover', 'artwork': 'https://www.udiscovermusic.com/wp-content/uploads/2019/08/Taylor-Swift-Lover-album-cover-820.jpg',
-            'preview': 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview113/v4/f8/cf/70/f8cf706f-8c33-9f99-46d6-30574d03ea80/mzaf_12060394202627098724.plus.aac.p.m4a',
-            'memo': 'I wanna be defined by the things that I love. Not the things I hate, not the things Im afraid of. The things that haunt me in the middle of the night, I just think that you are what you love.'},
-        ]
+        let filteredPosts = this.state.posts.filter(post => {
+            const query = this.state.searchWord.trim().toLowerCase();
+            return (
+                post.title.toLowerCase().includes(query) ||
+                post.album.toLowerCase().includes(query) ||
+                post.artist.toLowerCase().includes(query)
+            )
+        });
 
         return (
+            <>
+                <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
+
             <PostsWrapper>
-                {posts.map((post) => {
+                
+                {filteredPosts.map((post) => {
               return (
-                <Wrapper>
-                    <CD>
-              
-                        <TrackImage src = {post.artwork} alt="album artwork"/>
-                      
-                        <Circle/>
-                     
-                    </CD>
+                <Item>
+                <Post onClick = {this.handleClick} key = {post.id} id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
+                </Item> )})}
                 
-                {/* <Preview controls = "controls" src = {post.preview}/> */}
-                  <Title>{post.track}</Title>
-                 
-                  <Artist>{post.artist}</Artist>
-                  <Artist>{post.album}</Artist>
-                
-                  <MemoBox>{post.memo}</MemoBox>
-    
-                </Wrapper>
-                  )})}
             </PostsWrapper>
-        
-            
+            </>
         )
     }
 }
