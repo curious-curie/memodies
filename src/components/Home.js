@@ -2,10 +2,18 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import Post from './Post'
 import axios from 'axios';
+import { connect } from 'react-redux'
 import Search from './Search'
+import { postEditOpen, postEdit, postDelete, getPosts } from '../action/post'
+import Loader from './Loader'
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
+
+const LoaderWrapper = styled.div`
+position: relative;
+text-align: center;
+top: 100px; `;
 
 const PostsWrapper = styled.div`
     display: flex;
@@ -36,22 +44,31 @@ const SearchWrapper = styled.div`
 
 top: 80px;
 `;
-export default class Home extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            posts: [],
             searchWord: '',
             searchOpen: false,
-            editing: false,
             editText: '',
+            error: '',
         }
     }
 
-    componentDidMount(){
-        this.refreshList();
-    }
+    async componentDidMount() {
+        console.log(this.props)
+        console.log(this.props.posts)
+        try {
+          if (this.props.posts.length === 0) {
+              console.log("A")
+            await this.props.dispatch(getPosts())
+          }
+        } catch (e) {
+          this.setState({ error: e.message });
+        }
+      }
+   
 
     componentDidUpdate(){
         // this.refreshList();
@@ -84,41 +101,27 @@ export default class Home extends Component {
       }
 
 
-    handleRemove  = (id) => event => {
+    // handleRemove  = (id) => event => {
         
-        if (window.confirm('Are you sure you wish to delete this item?')) {
-            const url = `http://localhost:8000/api/posts/${id}/`;
+    //     if (window.confirm('Are you sure you wish to delete this item?')) {
+    //         const url = `http://localhost:8000/api/posts/${id}/`;
             
-            console.log(id);
-            axios.delete(url).then(res => 
-                {this.setState({
-                    posts: this.state.posts.filter(post => post.id !== id)
-                })} )
+    //         console.log(id);
+    //         axios.delete(url).then(res => 
+    //             {this.setState({
+    //                 posts: this.state.posts.filter(post => post.id !== id)
+    //             })} )
     
-            .catch(err => console.log(err));}
+    //         .catch(err => console.log(err));}
 
         
-    }
+    // }
 
-    onEdit = (id) => event => {
-        this.setState(
-            {editing: id,}
-        )
-    }
-
+ 
     submitEdit = (id) => event => {
-
-        const url = `http://localhost:8000/api/posts/${id}/`;
-        console.log(this.state.editText)
-        axios.patch(url, {"memo": this.state.editText}).then(
-            res => {console.log(res); 
-                this.setState({
-                    posts: this.state.posts.map(post => id === post.id? { ...post, "memo": this.state.editText} : post ),
-                    editing: -1,
-                    editText: '',
-             });
-            })
-       .catch(err => console.log(err));
+        console.log("EDIT")
+        const updatedMemo = this.state.editText
+        this.props.dispatch(postEdit(id, updatedMemo));
      
     }
 
@@ -130,7 +133,7 @@ export default class Home extends Component {
 
     render() {
 
-        let filteredPosts = this.state.posts.filter(post => {
+        let filteredPosts = this.props.posts.filter(post => {
             const query = this.state.searchWord.trim().toLowerCase();
             return (
                 post.title.toLowerCase().includes(query) ||
@@ -138,25 +141,41 @@ export default class Home extends Component {
                 post.artist.toLowerCase().includes(query)
             )
         });
-
+       
+       
         return (
             <>
                 <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
-
-            <PostsWrapper>
-                
+            { this.props.loading && <LoaderWrapper><Loader/></LoaderWrapper>}
+           
+    
+            { !this.props.loading && <PostsWrapper>
+    
                 {filteredPosts.map((post) => {
               return (
                 <Item key = {post.id}>
                 <Post key = {post.id} 
-                editing = {this.state.editing} handleEditText = {this.handleEditText} 
-                onEdit = {this.onEdit(post.id)} submitEdit = {this.submitEdit(post.id)}
-                onRemove = {this.handleRemove(post.id)} 
+                editing = {this.props.editing} handleEditText = {this.handleEditText} 
+                onEdit = {() => this.props.dispatch(postEditOpen(post.id))} submitEdit = {this.submitEdit(post.id)}
+                onRemove = {() => this.props.dispatch(postDelete(post.id))} 
                 id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}/>
-                </Item> )})}
+                </Item> )})} 
                 
-            </PostsWrapper>
+            </PostsWrapper>} 
             </>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        posts: state.post.posts,
+        loading: state.post.loading,
+        editing: state.post.editing,
+    }
+}
+
+
+
+
+export default connect(mapStateToProps)(Home);

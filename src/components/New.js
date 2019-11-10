@@ -142,7 +142,7 @@ class New extends Component {
                   artwork = {this.props.selected['artwork']}
                   album = {this.props.selected['collectionName']} 
                   preview = {this.props.selected['previewUrl']}
-                handleSubmit = {() => this.handleSubmit(this.props.selected, this.state.memo)} 
+                handleSubmit = {() => this.handleSubmit(this.props.selected, this.state.search.memo)} 
                  getMemo = {this.getMemo} />
                 </PostFormWrapper>
                 } 
@@ -155,12 +155,12 @@ class New extends Component {
 
 const mapStateToProps = state => {
     return {
-        results: state.results,
-        err: state.err,
-        selected: state.selected,
-        memo: state.memo,
-        loading: state.loading,
-        isSearching: state.isSearching,
+        results: state.search.results,
+        err: state.search.err,
+        selected: state.search.selected,
+        memo: state.search.memo,
+        loading: state.search.loading,
+        isSearching: state.search.isSearching,
     }
 }
 
