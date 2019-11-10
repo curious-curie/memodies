@@ -3,7 +3,7 @@ import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
 import styled from 'styled-components';
 
 const BigWrapper = styled.div`
-text-align:right;
+text-align:center;
 height: 60px;
 `;
 
@@ -11,8 +11,8 @@ const SearchWrapper = styled.div`
 display:inline-block
 margin: 40px;
 margin-right: 50px;
-width: 70%;
-@media (min-width: 500px) {
+width: 60%;
+@media (min-width: 900px) {
     width: 330px;
 }
 height: 46px;
@@ -27,15 +27,19 @@ const SearchInput = styled.input`
     display: inline-block;
     text-align: left;
     font-size: 1.2rem;
-    width: 250px;
+    width: 90%;
+    @media (min-width: 900px) {
+       width: 250px
+    }
     height: 40px;
     border: none;
     outline: none;
     `;
 const SearchButton = styled.button`
     position: relative;
+    float: right;
     display: inline-block;
-    @media (max-width: 500px) {
+    @media (max-width: 1000px) {
         top: -44px;
     }
     width: 50px;

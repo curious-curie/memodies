@@ -228,7 +228,7 @@ export default class Search extends Component {
                 <SearchButton type="button" onClick={()=>this.search()}> <SearchAlt/></SearchButton> </Block> </form>
 
                 {(this.state.loading) ? <Loader /> : null}
-                { this.state.results.map( item => <SearchListItem key={item.trackId} onClick={() => this.handleClick(item)} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
+                { this.state.results.map( item => <SearchListItem key={item.id} onClick={() => this.handleClick(item)} artist = {item.artistName} track = {item.trackName} album = {item.collectionName} image = {item.artwork}/>)}
 
                 </div>
                 }
@@ -237,6 +237,7 @@ export default class Search extends Component {
                 { !this.state.isSearching &&
                 <PostFormWrapper>
                   <PostForm
+                  key = {this.state.selected['id']}
                   id ={this.state.selected['id']}
                   artist={this.state.selected['artistName']}
                   track = {this.state.selected['trackName']}

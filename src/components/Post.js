@@ -1,6 +1,10 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components';
 import Preview from './Preview'
+import {DeleteBin} from 'styled-icons/remix-fill/DeleteBin';
+import {Edit} from 'styled-icons/boxicons-solid/Edit';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const Wrapper = styled.div`
     min-width: 300px;
@@ -71,15 +75,68 @@ const MemoBox = styled.div`
     line-height: 1.4;
 `;
 
+const MemoInput = styled.input`
+    font-size: 12px;
+    color: black;
+    text-indent: 1em;
+    text-align: justified;
+    margin: 15px;
+    background: whitesmoke;
+    border-radius: 5px;
+    line-height: 1.4;
+    outline: none;
+    border: none;
+    width: 260px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow-wrap: break-word
+    white-space: initial;
+`;
 
-const Post = ({id,track, preview, artist, album, artwork,memo, onClick}) => {
+const PostFooterWrapper = styled.div`
+margin-bottom: 10px;
+text-align: left;
+margin-right: 15px;
 
+`;
+
+const HoverEdit = styled(Edit)`
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+    margin-right: 10px;
+    margin-left: 10px;
+`;
+
+const HoverDeleteBin = styled(DeleteBin)`
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+`;
+
+const EditButton = styled.button`
+    border: none;
+    background: whitesmoke;
+    border-radius: 20px; 
+    width: 50px;
+    height: 20px;
+`;
+
+export default class Post extends Component {
+
+
+    render(){ 
+    
+    const {id,track, preview, artist, album, artwork,memo} = this.props;
     
     return (
         <Wrapper>
             <CD>
         
-                <TrackImage onClick ={onClick} src = {artwork} alt={id}/>
+                <TrackImage src = {artwork} alt={id}/>
                 
                 <Circle/>
                 
@@ -91,11 +148,17 @@ const Post = ({id,track, preview, artist, album, artwork,memo, onClick}) => {
             <Artist>{artist} </Artist>
             <Album>{album}</Album>
         
-            <MemoBox>{memo}</MemoBox>
+            { !(this.props.editing === id) && <MemoBox>{memo}</MemoBox>}
+            { (this.props.editing === id) && <><MemoInput onChange = {this.props.handleEditText} type="text" placeholder = {memo}/>
+            <EditButton onClick = {this.props.submitEdit}>Edit</EditButton></>}
 
+            <PostFooterWrapper>
+           
+           <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>
+          
+           <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>
+            </PostFooterWrapper>
         </Wrapper>
        
-    );
-};
-
-export default Post;
+    )};
+}
