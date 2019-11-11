@@ -127,6 +127,7 @@ export const logout = () => {
           })
           .then(res => {
               if (res.status === 204) {
+                  alert("See You Again!")
                   dispatch({type: 'LOGOUT_SUCCESSFUL'});
                   return res.data;
               } else if (res.status === 403 || res.status === 401) {

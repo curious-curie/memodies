@@ -5,13 +5,46 @@ import { Link , Redirect } from "react-router-dom";
 import { login } from "../../action/auth"
 
 
-const AuthForm = styled.form``;
-const Title = styled.div``;
+const AuthForm = styled.form`
+margin: 40px;
+text-align: center;`;
+
 const InputName = styled.div``;
-const AuthInput = styled.input``;
-const AuthButton = styled.button``;
+const AuthInput = styled.input`
+margin-bottom: 15px;
+border: 1px solid whitesmoke;
+border-radius: 15px;
+font-size: 15px;
+outline: none;
+padding: 10px;
 
+`;
+const AuthButton = styled.button`
+width: 180px;
+border-radius: 15px;
+background-color: #999999;
+border: none;
+color: white;
+font-weight: 600;
+font-size: 15px;
+padding: 10px;
+opacity: 0.5;
+margin-bottom: 20px;
 
+:hover {
+  background-color: hotpink;
+  opacity: 1;
+}
+`;
+
+const Sub = styled(Link)`
+  font-size: 15px;
+  text-decoration: none;
+  color: gray;
+  :hover {
+    color: hotpink;
+  }
+`;
 class LoginForm extends Component {
 
     state = {
@@ -35,21 +68,21 @@ class LoginForm extends Component {
                 
                 
          <AuthForm onSubmit = {this.onSubmit}>
-            <Title>SIGN IN</Title>
+            {/* <Title>SIGN IN</Title> */}
             <InputName
             
             >Username</InputName>
             <AuthInput type="text" id="username"
             onChange={e => this.setState({username: e.target.value})}/>
             <InputName>Password</InputName>
-            <AuthInput type = "password" id="password"
-            onChange={e => this.setState({password: e.target.value})}/>
+           <div> <AuthInput type = "password" id="password"
+            onChange={e => this.setState({password: e.target.value})}/> </div>
             
-            <AuthButton type="submit">SIGN IN</AuthButton>
+           <div> <AuthButton type="submit">SIGN IN</AuthButton></div>
       
-            <Link to={`/signup`}>
+            <Sub to={`/signup`}>
               if you don't have an account...
-            </Link>
+            </Sub>
          </AuthForm>
             </div>
         )

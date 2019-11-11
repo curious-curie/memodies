@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components';
+import { QueueMusic } from 'styled-icons/material/QueueMusic';
+import { DeleteSweep } from 'styled-icons/material/DeleteSweep';
 import Preview from './Preview'
 import {DeleteBin} from 'styled-icons/remix-fill/DeleteBin';
 import {Edit} from 'styled-icons/boxicons-solid/Edit';
@@ -125,6 +127,17 @@ const EditButton = styled.button`
     height: 20px;
 `;
 
+const BookmarkMusic = styled(QueueMusic)`
+    margin-left: 230px;
+    padding-right: 5px;
+    color: black;
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+
+`
+
 export default class Post extends Component {
 
     
@@ -133,7 +146,8 @@ export default class Post extends Component {
     const {id,track, preview, artist, album, artwork,memo, author, isAuthor} = this.props;
   
     return (
-        <Wrapper>
+        <Wrapper key>
+            <BookmarkMusic onClick = {this.props.addToPlaylist} size="32px"/>
             <CD>
         
                 <TrackImage src = {artwork} alt={id}/>

@@ -15,6 +15,9 @@ margin-top: 70px;
 margin-bottom: 50px;
 `;
 
+const LinkWrapper = styled.div`
+margin: 20px;
+`;
 const StyledLink = styled(Link)`
 text-decoration: none;
 color:black; 
@@ -22,13 +25,21 @@ color:black;
   &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
     }`;
+
+const Wrapper = styled.span`
+@import url('https://fonts.googleapis.com/css?family=Caveat|Mansalva|Quicksand|Satisfy&display=swap');
+font-family:  'Mansalva', cursive; 
+`;
 const Header = ({user, logout}) => {
     return (
-      <>
-      { user === ''? <span><Link to = "/login">login</Link></span> : <span>Hello, {user}</span>}
-      &nbsp; <span onClick = {logout}>logout</span>
+      
+      <Wrapper>
+      <LinkWrapper>
+      { user === ''? <span><StyledLink to = "/login">login</StyledLink></span> : <span>Hello, {user} :) </span>}
+      &nbsp;&nbsp; <span onClick = {logout}>logout</span>
+      </LinkWrapper>
        <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
-      </>
+       </Wrapper>
     );
 };
 

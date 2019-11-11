@@ -5,12 +5,46 @@ import { Link } from "react-router-dom";
 import {connect} from "react-redux";
 import { register } from "../../action/auth"
 
+const RegistForm = styled.form`
+margin: 40px;
+text-align: center;`;
 
-const RegistForm = styled.form``;
-const Title = styled.div``;
 const InputName = styled.div``;
-const AuthInput = styled.input``;
-const AuthButton = styled.button``;
+const AuthInput = styled.input`
+margin-bottom: 15px;
+border: 1px solid whitesmoke;
+border-radius: 15px;
+font-size: 15px;
+outline: none;
+padding: 10px;
+
+`;
+const AuthButton = styled.button`
+width: 180px;
+border-radius: 15px;
+background-color: #999999;
+border: none;
+color: white;
+font-weight: 600;
+font-size: 15px;
+padding: 10px;
+opacity: 0.5;
+margin-bottom: 20px;
+
+:hover {
+  background-color: hotpink;
+  opacity: 1;
+}
+`;
+
+const Sub = styled(Link)`
+  font-size: 15px;
+  text-decoration: none;
+  color: gray;
+  :hover {
+    color: hotpink;
+  }
+`;
 
 class RegisterForm extends Component {
 
@@ -35,7 +69,7 @@ class RegisterForm extends Component {
             <div>
     
             <RegistForm onSubmit = {this.onSubmit}>
-            <Title>SIGN UP</Title>
+            {/* <Title>SIGN UP</Title> */}
             <InputName>
                 Username</InputName>
             <AuthInput  type="text" id="username"
@@ -50,9 +84,9 @@ class RegisterForm extends Component {
             onChange={e => this.setState({confirmPW: e.target.value})}/>
     
             <AuthButton type="submit">SIGN UP</AuthButton>
-            <Link to={`/login`}>
-            if you already have account...
-            </Link>
+            <div><Sub to={`/login`}>
+            if you already have an account...
+            </Sub></div>
     
         </RegistForm>
             </div>

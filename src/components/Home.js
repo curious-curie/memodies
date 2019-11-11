@@ -4,7 +4,7 @@ import Post from './Post'
 import axios from 'axios';
 import { connect } from 'react-redux'
 import Search from './Search'
-import { postEditOpen, postEdit, postDelete, getPosts } from '../action/post'
+import { addToPlaylist, postEditOpen, postEdit, postDelete, getPosts } from '../action/post'
 import Loader from './Loader'
 
 axios.defaults.withCredentials = true;
@@ -142,7 +142,7 @@ class Home extends Component {
             { !this.props.loading && <PostsWrapper>
                 {filteredPosts.map((post) => {
               return (
-                <Item>
+                <Item key = {post.id}>
                 <Post 
                 key = {post.id} 
                 editing = {this.props.editing} handleEditText = {this.handleEditText} 
@@ -150,7 +150,8 @@ class Home extends Component {
                 onRemove = {() => this.props.dispatch(postDelete(post.id))} 
                 id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}
                 author = {post.owner}
-                isAuthor= {this.props.user.username === post.owner} />
+                isAuthor= {this.props.user.username === post.owner} 
+                addToPlaylist = {() => this.props.dispatch((addToPlaylist(this.props.user.username, post.id)))} />
                 </Item> )})} 
                 
             </PostsWrapper>} 

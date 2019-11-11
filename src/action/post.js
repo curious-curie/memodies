@@ -66,6 +66,23 @@ export const postDeleteError = (err) => {
     };
 }
 
+const playlistStart = () => {
+    return {
+        type: 'PLAYLIST_START',
+    }
+}
+
+const playlistSuccess = () => {
+    return {
+        type: 'PLAYLIST_SUCCESS',
+    }
+}
+
+const playlistError = () => {
+    return {
+        type: 'PLAYLIST_ERROR',
+    }
+}
 
 export const postEdit = (id, updatedMemo) => {
     const url = `http://localhost:8000/api/posts/${id}/`
@@ -131,3 +148,31 @@ export const postDelete = (id) => {
 
     }
 }}
+
+export const addToPlaylist = (user, track) => {
+    return (dispatch, getState) => {
+        let headers = {"Content-Type": "application/json"};
+        let {token} = getState().auth;
+        console.log(token)
+         if (token) {
+            headers["Authorization"] = `Token ${token}`;
+        }
+        console.log(user)
+        dispatch(playlistStart());
+        axios.post(`http://localhost:8000/api/playlists/`, {
+            owner: user,
+            track: track,
+        }, {headers: headers}).then(res => {
+            if (res.status === 401 || res.status === 403) {
+                alert("AUTHENTICATION ERROR!");
+                throw res.data;}
+    
+              else alert("Added To Playlist Successfully!");
+               dispatch(playlistSuccess());
+           })
+           .catch(err => {
+            alert(err);
+            dispatch(playlistError());
+        });
+    }
+}
