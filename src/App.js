@@ -8,7 +8,7 @@ import New from './components/New'
 import LoginForm from './components/auth/LoginForm'
 import RegisterForm from './components/auth/RegisterForm'
 import Header from './components/Header';
-import { loadUser } from "./action/auth"
+import { loadUser, logout } from "./action/auth"
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {Redirect, Switch} from 'react-router-dom';
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -39,7 +39,7 @@ class App extends Component {
     let {PrivateRoute} = this;
     return (
         <Router>
-          <Header user = {this.props.auth.isAuthenticated? this.props.auth.user.username : ''} />
+          <Header logout = {this.props.logout} user = {this.props.auth.isAuthenticated? this.props.auth.user.username : ''} />
             <Switch>
                 <PrivateRoute exact path="/" component={Main} />
                 <PrivateRoute exact path="/home" component={Main} />
@@ -63,7 +63,8 @@ const mapDispatchToProps = dispatch => {
   return {
       loadUser: () => {
           return dispatch(loadUser());
-      }
+      },
+      logout: () => dispatch(logout()),
   }
 }
 
