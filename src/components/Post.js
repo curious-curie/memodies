@@ -130,7 +130,7 @@ export default class Post extends Component {
     
     render(){ 
     
-    const {id,track, preview, artist, album, artwork,memo, author} = this.props;
+    const {id,track, preview, artist, album, artwork,memo, author, isAuthor} = this.props;
   
     return (
         <Wrapper>
@@ -147,16 +147,15 @@ export default class Post extends Component {
            
             <Artist>{artist} </Artist>
             <Album>{album}</Album>
-        
             { !(this.props.editing === id) && <MemoBox>{memo}</MemoBox>}
             { (this.props.editing === id) && <><MemoInput onChange = {this.props.handleEditText} type="text" placeholder = {memo}/>
             <EditButton onClick = {this.props.submitEdit}>Edit</EditButton></>}
 
             <PostFooterWrapper>
            
-           <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>
+           {isAuthor && <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>}
           
-           <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>
+           {isAuthor && <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>}
            &nbsp; {author}
             </PostFooterWrapper>
         </Wrapper>

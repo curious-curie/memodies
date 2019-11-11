@@ -69,10 +69,20 @@ export const postDeleteError = (err) => {
 
 export const postEdit = (id, updatedMemo) => {
     const url = `http://localhost:8000/api/posts/${id}/`
-    return (dispatch ) => { 
+    console.log(url);
+    return (dispatch, getState) => { 
+        let headers = {"Content-Type": "application/json"};
+        let {token} = getState().auth;
+         if (token) {
+            headers["Authorization"] = `Token ${token}`;
+        }
        dispatch(postEditStart(id));
-        axios.patch(url, {"memo": updatedMemo})
-    .then(  res => {
+        axios.patch(url, {"memo": updatedMemo}, { headers: headers })
+        .then(  res => {
+            if (res.status === 401 || res.status === 403) {
+                alert("AUTHENTICATION ERROR!");
+                throw res.data;}
+
             alert("Post Updated Successfully!");
             dispatch(postEditSuccess(id, updatedMemo));
         }).catch( err => {
@@ -100,9 +110,18 @@ export const getPosts = () => {
 
 export const postDelete = (id) => {
     const url = `http://localhost:8000/api/posts/${id}/`
-    return (dispatch) => {if (window.confirm('Are you sure you wish to delete this item?')){
+    return (dispatch, getState) => {if (window.confirm('Are you sure you wish to delete this item?')){
+        let headers = {"Content-Type": "application/json"};
+        let {token} = getState().auth;
+         if (token) {
+            headers["Authorization"] = `Token ${token}`;
+        }
         dispatch(postDeleteStart());
-        axios.delete(url).then(res => {
+        axios.delete(url, { headers: headers }).then(res => {
+            if (res.status === 401 || res.status === 403) {
+                alert("AUTHENTICATION ERROR!");
+                throw res.data;}
+
             alert("Post Deleted Successfully!");
             dispatch(postDeleteSuccess(id));
         }).catch(err => {
