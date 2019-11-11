@@ -22,10 +22,11 @@ color:black;
   &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
     }`;
-const Header = () => {
+const Header = ({user}) => {
     return (
       <>
-     
+      { user === ''? <span><Link to = "/login">login</Link></span> : <span>Hello, {user}</span>}
+      &nbsp; <Link to = "/logout">logout</Link>
        <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
       </>
     );

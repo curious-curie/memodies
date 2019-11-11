@@ -69,8 +69,15 @@ const postError = () => {
 
 export const postSubmit = (selected, memo, history) => {
  
-    return (dispatch) => {
+    return (dispatch, getState) => {
         console.log(memo);
+        let headers = {"Content-Type": "application/json"};
+        let {token} = getState().auth;
+        console.log(token)
+         if (token) {
+            headers["Authorization"] = `Token ${token}`;
+        }
+    console.log(headers)
        dispatch(postStart());
        axios.post(`http://localhost:8000/api/posts/`, {
         artist: selected['artistName'],
@@ -79,8 +86,12 @@ export const postSubmit = (selected, memo, history) => {
         album : selected['collectionName'],
         memo: memo,
         preview: selected['previewUrl'],
-       }).then( res => {
-           alert("Post Submitted Successfully!");
+       }, { headers: headers }).then( res => {
+        if (res.status === 401 || res.status === 403) {
+            alert("AUTHENTICATION ERROR!");
+            throw res.data;}
+
+          else alert("Post Submitted Successfully!");
            dispatch(postSuccess(history));
        })
        .catch(err => {

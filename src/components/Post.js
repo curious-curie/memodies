@@ -127,11 +127,11 @@ const EditButton = styled.button`
 
 export default class Post extends Component {
 
-
+    
     render(){ 
     
-    const {id,track, preview, artist, album, artwork,memo} = this.props;
-    
+    const {id,track, preview, artist, album, artwork,memo, author} = this.props;
+  
     return (
         <Wrapper>
             <CD>
@@ -144,7 +144,7 @@ export default class Post extends Component {
         
         <Preview url = {preview}/>
             <Title>{track}</Title>
-            
+           
             <Artist>{artist} </Artist>
             <Album>{album}</Album>
         
@@ -157,6 +157,7 @@ export default class Post extends Component {
            <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>
           
            <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>
+           &nbsp; {author}
             </PostFooterWrapper>
         </Wrapper>
        

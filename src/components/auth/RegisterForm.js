@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import {connect} from "react-redux";
+import { register } from "../../action/auth"
 
 
 const RegistForm = styled.form``;
@@ -24,7 +25,7 @@ class RegisterForm extends Component {
         if(this.state.password !== this.state.confirmPW)
         alert("PASSWORD DOES NOT MATCH!");
         else{
-
+            this.props.register(this.state.username, this.state.password);
         }
       }
 
@@ -35,24 +36,21 @@ class RegisterForm extends Component {
     
             <RegistForm onSubmit = {this.onSubmit}>
             <Title>SIGN UP</Title>
-            <InputName type="text" id="username"
-            onChange={e => this.setState({username: e.target.value})}>
+            <InputName>
                 Username</InputName>
-            <AuthInput/>
-            <InputName  
-            type="password" id="password"
-            onChange={e => this.setState({password: e.target.value})}>
+            <AuthInput  type="text" id="username"
+            onChange={e => this.setState({username: e.target.value})}/>
+            <InputName  >
                 Password</InputName>
-            <AuthInput/>
+            <AuthInput type="password" id="password"
+            onChange={e => this.setState({password: e.target.value})}/>
            
-            <InputName
-            type="password"
-            onChange={e => this.setState({confirmPW: e.target.value})}
-            >Confirm Password</InputName>
-            <AuthInput/>
+            <InputName>Confirm Password</InputName>
+            <AuthInput  type="password"
+            onChange={e => this.setState({confirmPW: e.target.value})}/>
     
             <AuthButton type="submit">SIGN UP</AuthButton>
-            <Link to={`/auth/login`}>
+            <Link to={`/login`}>
             if you already have account...
             </Link>
     
@@ -61,12 +59,24 @@ class RegisterForm extends Component {
         )
     }
 }
+
 const mapStateToProps = state => {
-    return {};
+    let errors = [];
+    if (state.auth.errors) {
+      errors = Object.keys(state.auth.errors).map(field => {
+        return {field, message: state.auth.errors[field]};
+      });
+    }
+    return {
+      errors,
+      isAuthenticated: state.auth.isAuthenticated
+    };
   }
   
   const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+      register: (username, password) => dispatch(register(username, password)),
+    };
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

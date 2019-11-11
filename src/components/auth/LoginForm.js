@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+import { Link , Redirect } from "react-router-dom";
+import { login } from "../../action/auth"
 
 
 const AuthForm = styled.form``;
@@ -20,24 +21,29 @@ class LoginForm extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-
+        this.props.login(this.state.username, this.state.password);
     }
+    
+
     render() {
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/" />
+          }
+
         return (
             <div>
+                
                 
          <AuthForm onSubmit = {this.onSubmit}>
             <Title>SIGN IN</Title>
             <InputName
-            type="text" id="username"
-            onChange={e => this.setState({username: e.target.value})}
+            
             >Username</InputName>
-            <AuthInput/>
-            <InputName 
-            type = "password" id="password"
-            onChange={e => this.setState({password: e.target.value})}
-            >Password</InputName>
-            <AuthInput/>
+            <AuthInput type="text" id="username"
+            onChange={e => this.setState({username: e.target.value})}/>
+            <InputName>Password</InputName>
+            <AuthInput type = "password" id="password"
+            onChange={e => this.setState({password: e.target.value})}/>
             
             <AuthButton type="submit">SIGN IN</AuthButton>
       
@@ -51,11 +57,24 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = state => {
-    return {};
+  let errors = [];
+  if (state.auth.errors) {
+    errors = Object.keys(state.auth.errors).map(field => {
+      return {field, message: state.auth.errors[field]};
+    });
   }
-  
-  const mapDispatchToProps = dispatch => {
-    return {};
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+  return {
+    errors,
+    isAuthenticated: state.auth.isAuthenticated
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (username, password) => {
+      return dispatch(login(username, password));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
