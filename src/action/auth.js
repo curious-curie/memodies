@@ -1,3 +1,4 @@
+
 export const loadUser = () => {
     return (dispatch, getState) => {
       dispatch({type: "USER_LOADING"});
@@ -85,6 +86,7 @@ export const loadUser = () => {
         })
         .then(res => {
           if (res.status === 200) {
+            alert("Registered Successfuly! Welcome!")
             dispatch({type: 'REGISTRATION_SUCCESSFUL', data: res.data });
             return res.data;
           } else if (res.status === 403 || res.status === 401) {

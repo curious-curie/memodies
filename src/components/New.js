@@ -91,8 +91,6 @@ class New extends Component {
         this.setState({
             memo: e.target.value,
         })
-        console.log(e.target.value)
-        console.log(this.state.memo)
     }
 
 

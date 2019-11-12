@@ -7,9 +7,37 @@ import Search from './Search'
 import { addToPlaylist, postEditOpen, postEdit, postDelete, getPosts } from '../action/post'
 import { getPlaylist } from '../action/playlist'
 import Loader from './Loader'
+import ReactTooltip from 'react-tooltip'
+
+import { UserCircle } from 'styled-icons/boxicons-solid/UserCircle';
+import { QueueMusic } from 'styled-icons/material/QueueMusic';
+import { Home2 } from 'styled-icons/icomoon/Home2';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
+
+
+const HomeButton = styled(Home2)`
+    margin: 10px;
+    margin-left: 30px;
+    background: none;
+    border: none;
+    color: ${props => props.selected === true? 'hotpink' : 'black'}
+`;
+
+const MyPostsButton = styled(UserCircle)`
+    margin: 10px;
+    background: none;
+    border: none;
+    color: ${props => props.selected === true? 'hotpink' : 'black'}
+`;
+
+const PlaylistButton = styled(QueueMusic)`
+    background: none;
+    border: none;
+    color: ${props => props.selected === true? 'hotpink' : 'black'}
+`;
+
 
 const LoaderWrapper = styled.div`
 position: relative;
@@ -54,9 +82,8 @@ class Home extends Component {
             searchOpen: false,
             editText: '',
             error: '',
-            filteredPosts: [],
-            posts: [],
             playlist: false,
+            myPosts: false,
         }
     }
 
@@ -85,7 +112,6 @@ class Home extends Component {
     }
 
     searchToggle = () => {
-        console.log(this.state.searchOpen)
         this.setState({
             searchOpen: !this.state.searchOpen,
             searchWord: '',
@@ -93,21 +119,6 @@ class Home extends Component {
       }
 
 
-    // handleRemove  = (id) => event => {
-        
-    //     if (window.confirm('Are you sure you wish to delete this item?')) {
-    //         const url = `http://localhost:8000/api/posts/${id}/`;
-            
-    //         console.log(id);
-    //         axios.delete(url).then(res => 
-    //             {this.setState({
-    //                 posts: this.state.posts.filter(post => post.id !== id)
-    //             })} )
-    
-    //         .catch(err => console.log(err));}
-
-        
-    // }
 
  
     submitEdit = (id) => event => {
@@ -125,9 +136,10 @@ class Home extends Component {
 
     loadPlaylist = userId => {
         this.props.dispatch(getPlaylist(userId));
-        console.log(this.props.playlist)
+    
         this.setState({
             playlist: true,
+            myPosts: false,
         })
     }
 
@@ -139,28 +151,59 @@ class Home extends Component {
             this.loadPlaylist(userId);
         }
     }
+
+    goToHome = () =>  {
+        this.setState({
+            playlist: false,
+            myPosts: false,
+        })
+    }
+
+    toggleMyPosts = (userId) => {
+            if(!this.state.myPosts) this.setState({myPosts: true, playlist: false})
+            else this.setState({myPosts: false})}
+
     render() {
 
-    
 
-        let filteredPosts = this.state.playlist? this.props.playlist: this.props.posts.filter(post => {
+        let filteredPosts = this.props.posts.filter(post => {
             const query = this.state.searchWord.trim().toLowerCase();
-            return (
-                post.title.toLowerCase().includes(query) ||
+            if(this.state.myPosts)
+            { return (
+                (post.title.toLowerCase().includes(query) ||
                 post.album.toLowerCase().includes(query) ||
-                post.artist.toLowerCase().includes(query)
-            )
+                post.artist.toLowerCase().includes(query) )
+                && ( post.owner === this.props.user.username)
+                // || post.owner.toLowerCase().includes(query)
+            )}
+            else {
+                return (
+                (post.title.toLowerCase().includes(query) ||
+                post.album.toLowerCase().includes(query) ||
+                post.artist.toLowerCase().includes(query) )
+                )
+            }
         });
+        
         
 
         return (
             <>
-            { console.log("POSTS" , filteredPosts) }
-            <button onClick = {() => this.togglePlaylist(this.props.user.id)}>
-                {this.state.playlist? <span>back</span> : <span>my playlist</span> }</button>
-                <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
+            
+            <HomeButton data-tip="home" size="27px" selected = {!this.state.playlist && !this.state.myPosts} onClick= {() => this.goToHome()}/>
+         
+            <PlaylistButton data-tip="my playlist" size="30px" selected = {this.state.playlist} onClick= {() => this.togglePlaylist(this.props.user.id)} />
+            <MyPostsButton data-tip="my posts" size="30px" selected = {this.state.myPosts} onClick = {() => this.toggleMyPosts(this.props.user.id)}/>
+            <ReactTooltip place="top" effect="solid"/>
+
+            { !this.state.playlist && !this.state.my && 
+             <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>}
             { this.props.loading && <LoaderWrapper><Loader/></LoaderWrapper>}
             
+
+
+                    
+
             { !this.props.loading && this.state.playlist && <PostsWrapper>
                 { this.props.playlist.map((post) => {
               return (
@@ -175,8 +218,10 @@ class Home extends Component {
                 isAuthor= {this.props.user.username === post.track.owner} 
                 addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.track.id)))} />
                 </Item> )})} 
+                { this.props.playlist.length === 0? <div>Your playlist is empty!</div> : <></>}
                 
             </PostsWrapper>} 
+            
             
     
             { !this.props.loading && !this.state.playlist && <PostsWrapper>

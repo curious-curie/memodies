@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import {connect} from "react-redux";
 import { register } from "../../action/auth"
+import { withRouter } from "react-router";
 
 const RegistForm = styled.form`
 margin: 40px;
@@ -60,6 +61,7 @@ class RegisterForm extends Component {
         alert("PASSWORD DOES NOT MATCH!");
         else{
             this.props.register(this.state.username, this.state.password);
+            this.props.history.push("/login");
         }
       }
 
@@ -83,7 +85,7 @@ class RegisterForm extends Component {
             <AuthInput  type="password"
             onChange={e => this.setState({confirmPW: e.target.value})}/>
     
-            <AuthButton type="submit">SIGN UP</AuthButton>
+            <div><AuthButton type="submit">SIGN UP</AuthButton></div>
             <div><Sub to={`/login`}>
             if you already have an account...
             </Sub></div>
@@ -113,4 +115,4 @@ const mapStateToProps = state => {
     };
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RegisterForm));

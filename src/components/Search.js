@@ -15,21 +15,23 @@ width: 60%;
 @media (min-width: 900px) {
     width: 330px;
 }
-height: 46px;
+height: 45px;
 padding: 5px;
 font-size: 1.2rem;
 border: none;
-border-bottom: 1px solid black;
+
 outline: none;
 `;
 
 const SearchInput = styled.input`
     display: inline-block;
     text-align: left;
-    font-size: 1.2rem;
-    width: 90%;
+    font-size: 1.1rem;
+    padding-left: 10px;
+    border-bottom: 1px solid black;
+    width: 80%;
     @media (min-width: 900px) {
-       width: 250px
+       width: 220px
     }
     height: 40px;
     border: none;

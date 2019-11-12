@@ -86,7 +86,6 @@ const playlistError = () => {
 
 export const postEdit = (id, updatedMemo) => {
     const url = `http://localhost:8000/api/posts/${id}/`
-    console.log(url);
     return (dispatch, getState) => { 
         let headers = {"Content-Type": "application/json"};
         let {token} = getState().auth;
@@ -119,7 +118,6 @@ export const getPosts = () => {
     return (dispatch) => {
         axios.get(url)
         .then(res => {
-            console.log(res.data);
             dispatch(refreshListSuccess(res.data))})
         .catch(err => dispatch(refreshListError(err)));
     }
@@ -154,11 +152,9 @@ export const addToPlaylist = (track) => {
     return (dispatch, getState) => {
         let headers = {"Content-Type": "application/json"};
         let {token} = getState().auth;
-        console.log(token)
          if (token) {
             headers["Authorization"] = `Token ${token}`;
         }
-        console.log(track)
         dispatch(playlistStart());
         axios.post(`http://localhost:8000/api/playlists/`, {
             track: track,
