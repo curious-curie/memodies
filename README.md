@@ -17,6 +17,7 @@ This is my toy-project to study react, redux mainly. designed & developed by cur
 
 * Search the song (data retrieved from Itunes API) and write note related to that song (Music Memo) 
 * Edit, delete the note you wrote 
+* Browse All posts/Your posts/Posts in your playlist
 * listen to the preview of the song (about 30sec)
 * archive songs by adding them to your playlists
 * or remove songs from your playlist
@@ -26,16 +27,14 @@ This is my toy-project to study react, redux mainly. designed & developed by cur
 
 
 <div>
+<img width="316" alt="스크린샷 2019-11-13 오전 2 24 10" src="https://user-images.githubusercontent.com/47528556/68694688-f6279080-05bc-11ea-9835-aefb2db4b211.png">
 <img width="318" alt="스크린샷 2019-11-13 오전 2 17 34" src="https://user-images.githubusercontent.com/47528556/68694689-f6279080-05bc-11ea-86e3-1508d385de25.png">
-<img width="316" alt="스크린샷 2019-11-13 오전 2 24 10" src="https://user-images.githubusercontent.com/47528556/
-68694688-f6279080-05bc-11ea-9835-aefb2db4b211.png">
 </div>
 
 <div>
 <img width="316" alt="스크린샷 2019-11-13 오전 2 16 57" src="https://user-images.githubusercontent.com/47528556/68694690-f6279080-05bc-11ea-9c6e-32923bdf9f43.png">
 
-<img width="318" alt="스크린샷 2019-11-13 오전 2 15 22" src="https://user-images.githubusercontent.com/47528556/
-68694693-f6c02700-05bc-11ea-8d14-568ed5421245.png">
+<img width="318" alt="스크린샷 2019-11-13 오전 2 15 22" src="https://user-images.githubusercontent.com/47528556/68694693-f6c02700-05bc-11ea-8d14-568ed5421245.png">
 </div>
 
 <div>
