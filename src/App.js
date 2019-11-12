@@ -20,8 +20,12 @@ axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 class App extends Component {
 
+  
+    
+
   componentDidMount() {
       this.props.loadUser();
+
   }
 
   PrivateRoute = ({component: ChildComponent, ...rest}) => {
@@ -36,7 +40,14 @@ class App extends Component {
       }} />
   }
 
+  
   render() {
+    const UserPlaylist = (props) => {
+        return ( 
+            <Playlist
+              owner = {this.props.auth.user}/>
+        )
+    }
     let {PrivateRoute} = this;
     return (
         <Router>
@@ -47,7 +58,7 @@ class App extends Component {
                 <Route exact path = "/new" component = {New}/>
                 <Route exact path="/signup" component={RegisterForm} />
                 <Route exact path="/login" component={LoginForm} />
-                <Route exact path="/playlist" component={Playlist} />
+                <Route exact path="/playlist" render={UserPlaylist} />
             </Switch>
         </Router>
     );

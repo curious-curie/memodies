@@ -5,6 +5,7 @@ import axios from 'axios';
 import { connect } from 'react-redux'
 import Search from './Search'
 import { addToPlaylist, postEditOpen, postEdit, postDelete, getPosts } from '../action/post'
+import { getPlaylist } from '../action/playlist'
 import Loader from './Loader'
 
 axios.defaults.withCredentials = true;
@@ -55,11 +56,13 @@ class Home extends Component {
             error: '',
             filteredPosts: [],
             posts: [],
+            playlist: false,
         }
     }
 
     componentDidMount() {
         this.props.dispatch(getPosts());
+        this.props.dispatch(getPlaylist(this.props.user.id));
       }
    
 
@@ -120,11 +123,27 @@ class Home extends Component {
         )
     }
 
+    loadPlaylist = userId => {
+        this.props.dispatch(getPlaylist(userId));
+        console.log(this.props.playlist)
+        this.setState({
+            playlist: true,
+        })
+    }
+
+    togglePlaylist = (userId) => {
+        if(this.state.playlist){
+            this.setState({ playlist: false })
+        }
+        else {
+            this.loadPlaylist(userId);
+        }
+    }
     render() {
 
     
 
-        let filteredPosts = this.props.posts.filter(post => {
+        let filteredPosts = this.state.playlist? this.props.playlist: this.props.posts.filter(post => {
             const query = this.state.searchWord.trim().toLowerCase();
             return (
                 post.title.toLowerCase().includes(query) ||
@@ -136,10 +155,31 @@ class Home extends Component {
 
         return (
             <>
+            { console.log("POSTS" , filteredPosts) }
+            <button onClick = {() => this.togglePlaylist(this.props.user.id)}>
+                {this.state.playlist? <span>back</span> : <span>my playlist</span> }</button>
                 <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>
             { this.props.loading && <LoaderWrapper><Loader/></LoaderWrapper>}
-           
-            { !this.props.loading && <PostsWrapper>
+            
+            { !this.props.loading && this.state.playlist && <PostsWrapper>
+                { this.props.playlist.map((post) => {
+              return (
+                <Item key = {post.track.id}>
+                <Post 
+                key = {post.track.id} 
+                editing = {this.props.editing} handleEditText = {this.handleEditText} 
+                onEdit = {() => this.props.dispatch(postEditOpen(post.track.id))} submitEdit = {this.submitEdit(post.track.id)}
+                onRemove = {() => this.props.dispatch(postDelete(post.track.id))} 
+                id = {post.track.id} artist = {post.track.artist} album = {post.track.album} track = {post.track.title} artwork = {post.track.artwork} preview={post.track.preview} memo = {post.track.memo}
+                author = {post.track.owner}
+                isAuthor= {this.props.user.username === post.track.owner} 
+                addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.track.id)))} />
+                </Item> )})} 
+                
+            </PostsWrapper>} 
+            
+    
+            { !this.props.loading && !this.state.playlist && <PostsWrapper>
                 {filteredPosts.map((post) => {
               return (
                 <Item key = {post.id}>
@@ -151,7 +191,7 @@ class Home extends Component {
                 id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}
                 author = {post.owner}
                 isAuthor= {this.props.user.username === post.owner} 
-                addToPlaylist = {() => this.props.dispatch((addToPlaylist(this.props.user.username, post.id)))} />
+                addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.id)))} />
                 </Item> )})} 
                 
             </PostsWrapper>} 
@@ -166,6 +206,7 @@ const mapStateToProps = state => {
         loading: state.post.loading,
         editing: state.post.editing,
         user: state.auth.user,
+        playlist: state.playlist.posts,
 
     }
 }

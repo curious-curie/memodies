@@ -125,6 +125,7 @@ export const getPosts = () => {
     }
 }
 
+
 export const postDelete = (id) => {
     const url = `http://localhost:8000/api/posts/${id}/`
     return (dispatch, getState) => {if (window.confirm('Are you sure you wish to delete this item?')){
@@ -149,7 +150,7 @@ export const postDelete = (id) => {
     }
 }}
 
-export const addToPlaylist = (user, track) => {
+export const addToPlaylist = (track) => {
     return (dispatch, getState) => {
         let headers = {"Content-Type": "application/json"};
         let {token} = getState().auth;
@@ -157,10 +158,9 @@ export const addToPlaylist = (user, track) => {
          if (token) {
             headers["Authorization"] = `Token ${token}`;
         }
-        console.log(user)
+        console.log(track)
         dispatch(playlistStart());
         axios.post(`http://localhost:8000/api/playlists/`, {
-            owner: user,
             track: track,
         }, {headers: headers}).then(res => {
             if (res.status === 401 || res.status === 403) {
