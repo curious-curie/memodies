@@ -23,6 +23,13 @@ export const postEditOpen = (id) => {
         id: id,
     }
 }
+
+export const cancelEdit = (id) => {
+    return {
+        type: 'CANCEL_EDIT',
+        id: id,
+    }
+}
 export const postEditStart = (id) => {
     return {
         type: 'POST_EDIT_START',

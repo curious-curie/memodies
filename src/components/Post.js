@@ -10,14 +10,19 @@ axios.defaults.withCredentials = true;
 
 const Wrapper = styled.div`
     min-width: 300px;
-    margin: 50px;
+    margin: 0 auto;
     padding-top: 10px;
     width: 300px;
     border-radius: 10px;
     overflow: hidden;
     color: darkgray;
     border: 1px solid whitesmoke;
-   
+    @media (min-width: 800px) {
+        margin: 20px;
+    }
+    @media (max-width: 799px){
+        margin-bottom: 60px;
+    }
 
 `;
 
@@ -77,7 +82,7 @@ const MemoBox = styled.div`
     line-height: 1.4;
 `;
 
-const MemoInput = styled.input`
+const MemoInput = styled.textarea`
     font-size: 12px;
     color: black;
     text-indent: 1em;
@@ -125,6 +130,7 @@ const EditButton = styled.button`
     border-radius: 20px; 
     width: 50px;
     height: 20px;
+    margin-bottom: 10px;
 `;
 
 const BookmarkMusic = styled(QueueMusic)`
@@ -175,7 +181,7 @@ export default class Post extends Component {
             <Album>{album}</Album>
             { !(this.props.editing === id) && <MemoBox>{memo}</MemoBox>}
             { (this.props.editing === id) && <><MemoInput onChange = {this.props.handleEditText} type="text" placeholder = {memo}/>
-            <EditButton onClick = {this.props.submitEdit}>Edit</EditButton></>}
+            <EditButton onClick = {this.props.cancelEdit}>Cancel</EditButton> <EditButton onClick = {this.props.submitEdit}>Edit</EditButton> </>}
 
             <PostFooterWrapper>
            

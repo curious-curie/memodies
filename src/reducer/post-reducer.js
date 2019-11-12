@@ -52,6 +52,12 @@ const postReducer = (
             loading: false,
             editing: action.id,
         }
+        case('CANCEL_EDIT'):
+        return {
+            ...state,
+            loading: false,
+            editing: -1,
+        }
         case('POST_EDIT_START'):
         return {
             ...state,

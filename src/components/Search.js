@@ -9,7 +9,6 @@ height: 60px;
 
 const SearchWrapper = styled.div`
 display:inline-block
-margin: 40px;
 margin-right: 50px;
 width: 60%;
 @media (min-width: 900px) {
@@ -49,13 +48,12 @@ const SearchButton = styled.button`
     border: none;
     outline: none;
     background-color: white;
-
 `;
 
 
 const SearchButtonClosed = styled.button`
-    margin: 40px;
-    margin-left: 50px;
+
+
     position: relative;
     width: 50px;
     height: 50px;

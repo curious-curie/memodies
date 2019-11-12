@@ -85,6 +85,7 @@ class New extends Component {
     handleSubmit = (selected, memo) => {
         console.log(memo);
         this.props.dispatch(postSubmit(selected,memo,this.props.history));
+        this.props.history.push("/home");
     }
 
     getMemo = (e) => {

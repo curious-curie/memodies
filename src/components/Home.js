@@ -4,7 +4,7 @@ import Post from './Post'
 import axios from 'axios';
 import { connect } from 'react-redux'
 import Search from './Search'
-import { addToPlaylist, postEditOpen, postEdit, postDelete, getPosts } from '../action/post'
+import { addToPlaylist, postEditOpen, cancelEdit, postEdit, postDelete, getPosts } from '../action/post'
 import { getPlaylist, deleteFromPlaylist } from '../action/playlist'
 import Loader from './Loader'
 import ReactTooltip from 'react-tooltip'
@@ -46,14 +46,18 @@ top: 100px; `;
 
 const PostsWrapper = styled.div`
     display: flex;
-    float: center;
-    justify-content: center;
+    margin: 0 auto;
+    justify-content: space-around;
     @media(max-width: 799px){
+        margin-top: 20px;
         flex-direction: column;
     }
     text-align: center;
     @media (min-width: 800px) {
         flex-wrap: wrap;
+    }
+    @media (min-width: 1200px){
+        width: 1200px;
     }
 `;
 const Item = styled.li`
@@ -63,15 +67,13 @@ const Item = styled.li`
 
 const SearchWrapper = styled.div`
 
-@media(max-width: 799px){
-    float: center;
-}
-@media (min-width: 800px) {
-    position: absolute;
-    right: 0px;
-}
 
-top: 80px;
+// @media (min-width: 800px) {
+//     position: absolute;
+//     right: 0px;
+// }
+
+
 `;
 class Home extends Component {
 
@@ -214,6 +216,7 @@ class Home extends Component {
                 playlist = {true}
                 editing = {this.props.editing} handleEditText = {this.handleEditText} 
                 onEdit = {() => this.props.dispatch(postEditOpen(post.track.id))} submitEdit = {this.submitEdit(post.track.id)}
+                cancelEdit = {() => this.props.dispatch(cancelEdit(post.track.id))}
                 onRemove = {() => this.props.dispatch(postDelete(post.track.id))} 
                 id = {post.track.id} artist = {post.track.artist} album = {post.track.album} track = {post.track.title} artwork = {post.track.artwork} preview={post.track.preview} memo = {post.track.memo}
                 author = {post.track.owner}
@@ -236,6 +239,7 @@ class Home extends Component {
                 playlist = {false}
                 editing = {this.props.editing} handleEditText = {this.handleEditText} 
                 onEdit = {() => this.props.dispatch(postEditOpen(post.id))} submitEdit = {this.submitEdit(post.id)}
+                cancelEdit = {() => this.props.dispatch(cancelEdit(post.id))}
                 onRemove = {() => this.props.dispatch(postDelete(post.id))} 
                 id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}
                 author = {post.owner}
