@@ -8,7 +8,6 @@ import New from './components/New'
 import LoginForm from './components/auth/LoginForm'
 import RegisterForm from './components/auth/RegisterForm'
 import Header from './components/Header';
-import Playlist from './components/Playlist'
 import { loadUser, logout } from "./action/auth"
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {Redirect, Switch} from 'react-router-dom';
@@ -42,12 +41,7 @@ class App extends Component {
 
   
   render() {
-    const UserPlaylist = (props) => {
-        return ( 
-            <Playlist
-              owner = {this.props.auth.user}/>
-        )
-    }
+  
     let {PrivateRoute} = this;
     return (
         <Router>
@@ -58,7 +52,7 @@ class App extends Component {
                 <Route exact path = "/new" component = {New}/>
                 <Route exact path="/signup" component={RegisterForm} />
                 <Route exact path="/login" component={LoginForm} />
-                <Route exact path="/playlist" render={UserPlaylist} />
+             
             </Switch>
         </Router>
     );

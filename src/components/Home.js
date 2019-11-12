@@ -5,7 +5,7 @@ import axios from 'axios';
 import { connect } from 'react-redux'
 import Search from './Search'
 import { addToPlaylist, postEditOpen, postEdit, postDelete, getPosts } from '../action/post'
-import { getPlaylist } from '../action/playlist'
+import { getPlaylist, deleteFromPlaylist } from '../action/playlist'
 import Loader from './Loader'
 import ReactTooltip from 'react-tooltip'
 
@@ -210,13 +210,16 @@ class Home extends Component {
                 <Item key = {post.track.id}>
                 <Post 
                 key = {post.track.id} 
+                playlistId = {post.id}
+                playlist = {true}
                 editing = {this.props.editing} handleEditText = {this.handleEditText} 
                 onEdit = {() => this.props.dispatch(postEditOpen(post.track.id))} submitEdit = {this.submitEdit(post.track.id)}
                 onRemove = {() => this.props.dispatch(postDelete(post.track.id))} 
                 id = {post.track.id} artist = {post.track.artist} album = {post.track.album} track = {post.track.title} artwork = {post.track.artwork} preview={post.track.preview} memo = {post.track.memo}
                 author = {post.track.owner}
                 isAuthor= {this.props.user.username === post.track.owner} 
-                addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.track.id)))} />
+                addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.track.id)))} 
+                deleteFromPlaylist = {() => this.props.dispatch(deleteFromPlaylist(post.id, post.track.id))}/>
                 </Item> )})} 
                 { this.props.playlist.length === 0? <div>Your playlist is empty!</div> : <></>}
                 
@@ -230,13 +233,15 @@ class Home extends Component {
                 <Item key = {post.id}>
                 <Post 
                 key = {post.id} 
+                playlist = {false}
                 editing = {this.props.editing} handleEditText = {this.handleEditText} 
                 onEdit = {() => this.props.dispatch(postEditOpen(post.id))} submitEdit = {this.submitEdit(post.id)}
                 onRemove = {() => this.props.dispatch(postDelete(post.id))} 
                 id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}
                 author = {post.owner}
                 isAuthor= {this.props.user.username === post.owner} 
-                addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.id)))} />
+                addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.id)))} 
+                />
                 </Item> )})} 
                 
             </PostsWrapper>} 
@@ -252,7 +257,6 @@ const mapStateToProps = state => {
         editing: state.post.editing,
         user: state.auth.user,
         playlist: state.playlist.posts,
-
     }
 }
 

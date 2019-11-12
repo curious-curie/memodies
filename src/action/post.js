@@ -162,12 +162,12 @@ export const addToPlaylist = (track) => {
             if (res.status === 401 || res.status === 403) {
                 alert("AUTHENTICATION ERROR!");
                 throw res.data;}
-    
+            
               else alert("Added To Playlist Successfully!");
                dispatch(playlistSuccess());
            })
            .catch(err => {
-            alert(err);
+            alert("I think that song is already in your playlist!");
             dispatch(playlistError());
         });
     }

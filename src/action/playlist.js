@@ -19,10 +19,29 @@ export const getPlaylistError = (err) => {
     }
 }
 
+export const deleteFromPlaylistStart = () => {
+    return {
+        type: 'DELETE_FROM_PLAYLIST_START',
+    }
+}
+
+export const deleteFromPlaylistSuccess = (id) => {
+    return {
+        type: 'DELETE_FROM_PLAYLIST_SUCCESS',
+        id: id
+    }
+}
+
+export const deleteFromPlaylistError = (err) => {
+    return {
+        type: 'DELETE_FROM_PLAYLIST_ERROR',
+        error: err,
+    }
+}
+
 export const getPlaylist = (userId) => {
     const url = `http://localhost:8000/api/pl/${userId}/`
     return (dispatch) => {
-        console.log("getting")
         dispatch(getPlaylistStart());
         axios.get(url)
         .then(res => 
@@ -31,3 +50,17 @@ export const getPlaylist = (userId) => {
     }
 }
 
+export const deleteFromPlaylist = (playlistId, postId) => {
+    console.log(playlistId)
+    const url = `http://localhost:8000/api/playlists/${playlistId}/`
+    return (dispatch) => {
+        dispatch(deleteFromPlaylistStart());
+        axios.delete(url).then(res => {
+            dispatch(deleteFromPlaylistSuccess(playlistId));
+            alert("deleted")
+        }).catch(err => {
+            alert("Something Went Wrong... Try Again");
+            dispatch(deleteFromPlaylistError(err));
+        })
+    }
+}

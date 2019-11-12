@@ -138,16 +138,28 @@ const BookmarkMusic = styled(QueueMusic)`
 
 `
 
+const DeletePlaylist = styled(DeleteSweep)`
+    margin-left: 230px;
+    padding-right: 5px;
+    color: black;
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+
+`
+
 export default class Post extends Component {
 
     
     render(){ 
     
-    const {id,track, preview, artist, album, artwork,memo, author, isAuthor} = this.props;
+    const {id,track, preview, artist, album, artwork,memo, author, isAuthor } = this.props;
   
     return (
         <Wrapper key>
-            <BookmarkMusic onClick = {this.props.addToPlaylist} size="32px"/>
+            { ! this.props.playlist? <BookmarkMusic onClick = {this.props.addToPlaylist} size="32px"/> :
+            <DeletePlaylist onClick = {this.props.deleteFromPlaylist} size="32px"/> }
             <CD>
         
                 <TrackImage src = {artwork} alt={id}/>
@@ -157,9 +169,9 @@ export default class Post extends Component {
             </CD>
         
         <Preview url = {preview}/>
-            <Title>{track}</Title>
+            <Title>{track} </Title>
            
-            <Artist>{artist} </Artist>
+            <Artist>{artist}</Artist>
             <Album>{album}</Album>
             { !(this.props.editing === id) && <MemoBox>{memo}</MemoBox>}
             { (this.props.editing === id) && <><MemoInput onChange = {this.props.handleEditText} type="text" placeholder = {memo}/>
