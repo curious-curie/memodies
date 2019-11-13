@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 <br>
 
 ### Django REST API + React + Redux 
-#### styled components, redux-thunk, Itunes API has been used / responsive design 
+#### styled components, redux-thunk, Itunes API have been used / responsive design 
 ### Note your thoughts and memories that a song triggered
 ### Or quote favorite lyrics from a particular song
 ### See other's notes, add them to your playlist, listen to the preview of the song
@@ -34,7 +34,8 @@ This is my toy-project to study react, redux mainly. designed & developed by cur
 <div>
 <img width="316" alt="스크린샷 2019-11-13 오전 2 16 57" src="https://user-images.githubusercontent.com/47528556/68694690-f6279080-05bc-11ea-9c6e-32923bdf9f43.png">
 
-<img width="318" alt="스크린샷 2019-11-13 오전 2 15 22" src="https://user-images.githubusercontent.com/47528556/68694693-f6c02700-05bc-11ea-8d14-568ed5421245.png">
+<img width="318" alt="스
+크린샷 2019-11-13 오전 2 15 22" src="https://user-images.githubusercontent.com/47528556/68694693-f6c02700-05bc-11ea-8d14-568ed5421245.png">
 </div>
 
 <div>

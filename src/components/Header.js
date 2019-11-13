@@ -26,17 +26,23 @@ color:black;
         text-decoration: none;
     }`;
 
+const HoverSpan = styled.span`
+:hover {
+  color:hotpink;
+}
+`;
 const Wrapper = styled.span`
 @import url('https://fonts.googleapis.com/css?family=Caveat|Mansalva|Quicksand|Satisfy&display=swap');
 font-family:  'Mansalva', cursive; 
+font-size: 20px;
 `;
 const Header = ({user, logout}) => {
     return (
       
       <Wrapper>
       <LinkWrapper>
-      { user === ''? <span><StyledLink to = "/login">login</StyledLink></span> : <span>Hello, {user} :) </span>}
-      &nbsp;&nbsp; <span onClick = {logout}>logout</span>
+      { user === ''? <StyledLink to = "/login"><HoverSpan>login</HoverSpan></StyledLink> : <span>Hello, {user} :) </span>}
+      &nbsp;&nbsp; <HoverSpan onClick = {logout}>logout</HoverSpan>
       </LinkWrapper>
        <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
        </Wrapper>

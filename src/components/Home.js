@@ -220,7 +220,7 @@ class Home extends Component {
                 onRemove = {() => this.props.dispatch(postDelete(post.track.id))} 
                 id = {post.track.id} artist = {post.track.artist} album = {post.track.album} track = {post.track.title} artwork = {post.track.artwork} preview={post.track.preview} memo = {post.track.memo}
                 author = {post.track.owner}
-                isAuthor= {this.props.user.username === post.track.owner} 
+                isAuthor= {false}
                 addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.track.id)))} 
                 deleteFromPlaylist = {() => this.props.dispatch(deleteFromPlaylist(post.id, post.track.id))}/>
                 </Item> )})} 
