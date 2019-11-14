@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import SearchListItem from './SearchListItem';
-import PostForm from './PostForm';
+import SearchListItem from '../SearchListItem';
+import PostForm from '../PostForm';
 import styled from 'styled-components';
 import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
 import axios from 'axios';
-import Loader from './Loader'
+import Loader from '../Loader'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { searchReset, searchTracks, selectTrack, postSubmit } from '../action'
+import { searchReset, searchTracks, selectTrack, postSubmit } from '../../action'
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000/api/';

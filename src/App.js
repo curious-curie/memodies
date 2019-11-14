@@ -3,17 +3,18 @@ import './App.css';
 
 import { connect } from "react-redux";
 import axios from 'axios';
-import Main from './components/Main'
-import New from './components/New'
+import Loader from './components/Loader';
+import Main from './components/pages/Main'
+import New from './components/pages/New'
 import LoginForm from './components/auth/LoginForm'
 import RegisterForm from './components/auth/RegisterForm'
 import Header from './components/Header';
 import { loadUser, logout } from "./action/auth"
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { LoaderWrapper } from './components/pages/Home'
 import {Redirect, Switch} from 'react-router-dom';
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
-
 
 
 
@@ -30,7 +31,7 @@ class App extends Component {
   PrivateRoute = ({component: ChildComponent, ...rest}) => {
       return <Route {...rest} render={props => {
           if (this.props.auth.isLoading) {
-              return <em>Loading...</em>;
+              return <LoaderWrapper><Loader/></LoaderWrapper>;
           } else if (!this.props.auth.isAuthenticated) {
               return <Redirect to="/login" />;
           } else {

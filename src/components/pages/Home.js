@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import Post from './Post'
+import Post from '../Post'
 import axios from 'axios';
 import { connect } from 'react-redux'
-import Search from './Search'
-import { addToPlaylist, postEditOpen, cancelEdit, postEdit, postDelete, getPosts } from '../action/post'
-import { getPlaylist, deleteFromPlaylist } from '../action/playlist'
-import Loader from './Loader'
+import Search from '../Search'
+import { addToPlaylist, postEditOpen, cancelEdit, postEdit, postDelete, getPosts } from '../../action/post'
+import { getPlaylist, deleteFromPlaylist } from '../../action/playlist'
+import Loader from '../Loader'
 import ReactTooltip from 'react-tooltip'
 
 import { UserCircle } from 'styled-icons/boxicons-solid/UserCircle';
@@ -39,7 +39,7 @@ const PlaylistButton = styled(QueueMusic)`
 `;
 
 
-const LoaderWrapper = styled.div`
+export const LoaderWrapper = styled.div`
 position: relative;
 text-align: center;
 top: 100px; `;
