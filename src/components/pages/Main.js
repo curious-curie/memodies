@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AddButton from './AddButton';
+import AddButton from '../AddButton';
 import { Link } from 'react-router-dom';
 import Home from './Home';
 import axios from 'axios';

@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components';
+import { QueueMusic } from 'styled-icons/material/QueueMusic';
+import { DeleteSweep } from 'styled-icons/material/DeleteSweep';
 import Preview from './Preview'
 import {DeleteBin} from 'styled-icons/remix-fill/DeleteBin';
 import {Edit} from 'styled-icons/boxicons-solid/Edit';
@@ -8,14 +10,19 @@ axios.defaults.withCredentials = true;
 
 const Wrapper = styled.div`
     min-width: 300px;
-    margin: 50px;
+    margin: 0 auto;
     padding-top: 10px;
     width: 300px;
     border-radius: 10px;
     overflow: hidden;
     color: darkgray;
     border: 1px solid whitesmoke;
-   
+    @media (min-width: 800px) {
+        margin: 20px;
+    }
+    @media (max-width: 799px){
+        margin-bottom: 60px;
+    }
 
 `;
 
@@ -75,7 +82,7 @@ const MemoBox = styled.div`
     line-height: 1.4;
 `;
 
-const MemoInput = styled.input`
+const MemoInput = styled.textarea`
     font-size: 12px;
     color: black;
     text-indent: 1em;
@@ -123,17 +130,42 @@ const EditButton = styled.button`
     border-radius: 20px; 
     width: 50px;
     height: 20px;
+    margin-bottom: 10px;
 `;
+
+const BookmarkMusic = styled(QueueMusic)`
+    margin-left: 230px;
+    padding-right: 5px;
+    color: black;
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+
+`
+
+const DeletePlaylist = styled(DeleteSweep)`
+    margin-left: 230px;
+    padding-right: 5px;
+    color: black;
+    opacity: 0.5;
+    :hover {
+        opacity: 1;
+    }
+
+`
 
 export default class Post extends Component {
 
-
+    
     render(){ 
     
-    const {id,track, preview, artist, album, artwork,memo} = this.props;
-    
+    const {id,track, preview, artist, album, artwork,memo, author, isAuthor } = this.props;
+  
     return (
-        <Wrapper>
+        <Wrapper key>
+            { ! this.props.playlist? <BookmarkMusic onClick = {this.props.addToPlaylist} size="32px"/> :
+            <DeletePlaylist onClick = {this.props.deleteFromPlaylist} size="32px"/> }
             <CD>
         
                 <TrackImage src = {artwork} alt={id}/>
@@ -143,20 +175,20 @@ export default class Post extends Component {
             </CD>
         
         <Preview url = {preview}/>
-            <Title>{track}</Title>
-            
-            <Artist>{artist} </Artist>
+            <Title>{track} </Title>
+           
+            <Artist>{artist}</Artist>
             <Album>{album}</Album>
-        
             { !(this.props.editing === id) && <MemoBox>{memo}</MemoBox>}
             { (this.props.editing === id) && <><MemoInput onChange = {this.props.handleEditText} type="text" placeholder = {memo}/>
-            <EditButton onClick = {this.props.submitEdit}>Edit</EditButton></>}
+            <EditButton onClick = {this.props.cancelEdit}>Cancel</EditButton> <EditButton onClick = {this.props.submitEdit}>Edit</EditButton> </>}
 
             <PostFooterWrapper>
            
-           <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>
+           {isAuthor && <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>}
           
-           <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>
+           {isAuthor && <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>}
+           &nbsp; {author}
             </PostFooterWrapper>
         </Wrapper>
        

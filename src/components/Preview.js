@@ -11,8 +11,8 @@ const PlayButton = styled.button`
     border: none;
     cursor:pointer;
     position: absolute;
-    top: -167px;
-    right: 98px;
+    top: -168px;
+    right: 97px;
     z-index: 999;
     outline: none;
     :hover {
@@ -20,6 +20,25 @@ const PlayButton = styled.button`
     }
  
 `;
+
+const PauseButton = styled.button`
+    opacity: 0.5;
+    margin: 40px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    position: absolute;
+    top: -168px;
+    right: 99px;
+    z-index: 999;
+    outline: none;
+    :hover {
+        opacity: 0.9
+    }
+ 
+`;
+
 
 const PlayWrapper = styled.div`
 position: relative;
@@ -56,7 +75,7 @@ export default class Preview extends Component {
             return (
               <PlayWrapper>
                 { !this.state.play && <PlayButton onClick={this.play}><FontAwesomeIcon icon={faPlay} size="2x" /></PlayButton>}
-                { this.state.play && <PlayButton onClick={this.play}><FontAwesomeIcon icon={faPause} size="2x" /></PlayButton>}
+                { this.state.play && <PauseButton onClick={this.play}><FontAwesomeIcon icon={faPause} size="2x" /></PauseButton>}
              </PlayWrapper>
               );
             }

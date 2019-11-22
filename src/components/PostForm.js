@@ -29,13 +29,14 @@ const Subsub = styled.input`
     margin-bottom: 30px;
 `;
 
-const Memo = styled.input`
+const Memo = styled.textarea`
 
     background-color: whitesmoke;
-    font-size: 1.2em;
+    font-size: 15px;
     border-radius: 30px;
     padding: 25px;
     border: none;
+    height: 150px;
     width: 80%;
     @media (min-width: 700px) {
         width: 600px;
@@ -46,11 +47,17 @@ const PostButton = styled.button`
     margin-top: 30px;
     margin-right: 20px;
     border-radius: 30px;
-    border: 1px solid gray;
+    border: none;
     padding: 10px;
-    color: gray;
+    opacity: 0.7;
+    background-color: #999999;
+    color: white;
     font-size: 1.2rem;
     width: 150px;
+    :hover {
+        background-color: hotpink;
+        opacity: 1;
+      }
 `;
 
 
@@ -98,7 +105,7 @@ export default class PostForm extends Component {
                 <Title type="text" name = "track" value={this.props.track || ''}  readOnly/>
                 <Sub type="text" name = "artist" value={this.props.artist || ''} readOnly/>
                 <Subsub type="text" name = "album" value={this.props.album || ''} readOnly/>
-                <Memo type="text" name = "memo" onChange = {this.props.getMemo} placeholder ="write your memo here"/>
+                <Memo ref = "Memo" type="text" name = "memo" onChange = {this.props.getMemo} placeholder ="write your memo here"/>
                 <div><PostButton onClick={this.props.handleSubmit} className="add">Post</PostButton></div>
             </form>
             
