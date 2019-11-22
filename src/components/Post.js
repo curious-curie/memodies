@@ -11,6 +11,8 @@ axios.defaults.withCredentials = true;
 const Wrapper = styled.div`
     min-width: 300px;
     margin: 0 auto;
+    margin-bottom: 60px;
+    
     padding-top: 10px;
     width: 300px;
     border-radius: 10px;
@@ -18,12 +20,8 @@ const Wrapper = styled.div`
     color: darkgray;
     border: 1px solid whitesmoke;
     @media (min-width: 800px) {
-        margin: 20px;
+        margin: 30px;
     }
-    @media (max-width: 799px){
-        margin-bottom: 60px;
-    }
-
 `;
 
 const Title = styled.div`
@@ -185,10 +183,10 @@ export default class Post extends Component {
 
             <PostFooterWrapper>
            
-           {isAuthor && <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>}
-          
-           {isAuthor && <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>}
-           &nbsp; {author}
+                {isAuthor && <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>}
+                
+                {isAuthor && <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>}
+                &nbsp; {author}
             </PostFooterWrapper>
         </Wrapper>
        

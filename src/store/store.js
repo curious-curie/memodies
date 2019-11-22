@@ -19,5 +19,4 @@ const store = createStore(
   /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))
 );
 
-console.log(store.getState());
 export default store;

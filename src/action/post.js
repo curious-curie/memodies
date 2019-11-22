@@ -119,9 +119,7 @@ export const postEdit = (id, updatedMemo) => {
 export const getPosts = () => {
     
     const url = `http://localhost:8000/api/posts/`
-    axios.get(url).then(res => {
-        console.log(res.data);
-    })
+
     return (dispatch) => {
         axios.get(url)
         .then(res => {
