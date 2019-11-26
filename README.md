@@ -27,6 +27,5 @@ link to memodies-backend repository: [Link](https://github.com/curious-curie/mem
 * additional features will be added soon... 
 <br>
 ![memodies-phone](https://user-images.githubusercontent.com/47528556/68744871-e64d9200-0638-11ea-883a-908fbc0e2eff.gif)
-<img src "https://user-images.githubusercontent.com/47528556/68744871-e64d9200-0638-11ea-883a-908fbc0e2eff.gif"/>
 <br><br>
 ![memodies-desktop](https://user-images.githubusercontent.com/47528556/68744872-e6e62880-0638-11ea-8a37-1e7e88143a9d.gif)
