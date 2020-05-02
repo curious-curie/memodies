@@ -5,6 +5,7 @@
   "proxy": "https://memodies-back.herokuapp.com/",
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.55",
+    "axios": "^0.19.2",
     "prettier": "^1.19.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
