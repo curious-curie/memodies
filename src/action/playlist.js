@@ -40,7 +40,7 @@ export const deleteFromPlaylistError = (err) => {
 }
 
 export const getPlaylist = (userId) => {
-    const url = `http://localhost:8000/api/pl/${userId}/`
+    const url = `/api/pl/${userId}/`
     return (dispatch) => {
         dispatch(getPlaylistStart());
         axios.get(url)
@@ -51,8 +51,7 @@ export const getPlaylist = (userId) => {
 }
 
 export const deleteFromPlaylist = (playlistId, postId) => {
-    console.log(playlistId)
-    const url = `http://localhost:8000/api/playlists/${playlistId}/`
+    const url = `/api/playlists/${playlistId}/`
     return (dispatch) => {
         dispatch(deleteFromPlaylistStart());
         axios.delete(url).then(res => {

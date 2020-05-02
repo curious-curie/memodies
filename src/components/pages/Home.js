@@ -12,10 +12,8 @@ import ReactTooltip from 'react-tooltip'
 import { UserCircle } from 'styled-icons/boxicons-solid/UserCircle';
 import { QueueMusic } from 'styled-icons/material/QueueMusic';
 import { Home2 } from 'styled-icons/icomoon/Home2';
-import { faThList } from '@fortawesome/free-solid-svg-icons';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
 
 
 const HomeButton = styled(Home2)`

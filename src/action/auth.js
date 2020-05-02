@@ -12,7 +12,7 @@ export const loadUser = () => {
       if (token) {
         headers["Authorization"] = `Token ${token}`;
       }
-      return fetch("http://localhost:8000/api/auth/user/", {headers, })
+      return fetch('https://memodies-back.herokuapp.com/api/auth/user/', {headers})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
@@ -42,7 +42,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({username, password});
   
-      return fetch("http://localhost:8000/api/auth/login/", {headers, body, method: "POST"})
+      return fetch('https://memodies-back.herokuapp.com/api/auth/login/', {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {

@@ -75,7 +75,7 @@ export const postSubmit = (selected, memo, history) => {
             headers["Authorization"] = `Token ${token}`;
         }
        dispatch(postStart());
-       axios.post(`http://localhost:8000/api/posts/`, {
+       axios.post('/api/posts/', {
         artist: selected['artistName'],
         title : selected['trackName'],
         artwork : selected['artwork'],
@@ -106,7 +106,6 @@ export const searchTracks = (searchWord) => {
     return (dispatch) => {
 
         dispatch(searchTracksStart());
-        console.log(searchWord);
         searchWord = searchWord.replace('%20', ' ');
 
         axios.get(`https://itunes.apple.com/search?term=${searchWord}&entity=musicTrack`)
