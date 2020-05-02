@@ -3,7 +3,6 @@ import SearchListItem from './SearchListItem';
 import PostForm from './PostForm';
 import styled from 'styled-components';
 import {SearchAlt} from 'styled-icons/boxicons-regular/SearchAlt';
-import Axios from 'axios';
 
 const Wrapper = styled.div`
 text-align: center;
