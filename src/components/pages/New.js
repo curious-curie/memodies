@@ -8,6 +8,8 @@ import Loader from '../Loader'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { searchReset, searchTracks, selectTrack, postSubmit } from '../../action'
+import { getPosts } from '../../action/post'
+
 
 axios.defaults.withCredentials = true;
 
@@ -85,6 +87,7 @@ class New extends Component {
         console.log(memo);
         this.props.dispatch(postSubmit(selected,memo,this.props.history));
         this.props.history.push("/home");
+        this.props.dispatch(getPosts());
     }
 
     getMemo = (e) => {
