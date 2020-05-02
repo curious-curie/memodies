@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const SEARCH_TRACKS_START = 'SEARCH_TRACKS_START';
-// export const SEARCH_TRACKS_LOADING = 'SEARCH_TRACKS_LOADING';
 export const SEARCH_TRACKS_ERROR = 'SEARCH_TRACKS_ERROR';
 export const SEARCH_TRACKS_SUCCESS = 'SEARCH_TRACKS_SUCCESS';
 export const SELECT_TRACK = 'SELECT_TRACK';
@@ -32,12 +31,12 @@ const searchTracksSuccess = tracks => {
     }
 };
 
-const searchTracksError = err => {
-    return {
-        type: 'SEARCH_TRACKS_ERROR',
-        err
-    }
-};
+// const searchTracksError = err => {
+//     return {
+//         type: 'SEARCH_TRACKS_ERROR',
+//         err
+//     }
+// };
 
 export const selectTrack = item => {
     console.log(item);
@@ -70,16 +69,13 @@ const postError = () => {
 export const postSubmit = (selected, memo, history) => {
  
     return (dispatch, getState) => {
-        console.log(memo);
         let headers = {"Content-Type": "application/json"};
         let {token} = getState().auth;
-        console.log(token)
          if (token) {
             headers["Authorization"] = `Token ${token}`;
         }
-    console.log(headers)
        dispatch(postStart());
-       axios.post(`http://localhost:8000/api/posts/`, {
+       axios.post('/api/posts/', {
         artist: selected['artistName'],
         title : selected['trackName'],
         artwork : selected['artwork'],
@@ -110,7 +106,6 @@ export const searchTracks = (searchWord) => {
     return (dispatch) => {
 
         dispatch(searchTracksStart());
-        console.log(searchWord);
         searchWord = searchWord.replace('%20', ' ');
 
         axios.get(`https://itunes.apple.com/search?term=${searchWord}&entity=musicTrack`)

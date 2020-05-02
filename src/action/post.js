@@ -92,7 +92,7 @@ const playlistError = () => {
 }
 
 export const postEdit = (id, updatedMemo) => {
-    const url = `http://localhost:8000/api/posts/${id}/`
+    const url = `/api/posts/${id}/`
     return (dispatch, getState) => { 
         let headers = {"Content-Type": "application/json"};
         let {token} = getState().auth;
@@ -118,13 +118,12 @@ export const postEdit = (id, updatedMemo) => {
 
 export const getPosts = () => {
     
-    const url = `http://localhost:8000/api/posts/`
-    axios.get(url).then(res => {
-        console.log(res.data);
-    })
+    const url = 'https://memodies-back.herokuapp.com/api/posts/'
+
     return (dispatch) => {
         axios.get(url)
         .then(res => {
+            console.log(res)
             dispatch(refreshListSuccess(res.data))})
         .catch(err => dispatch(refreshListError(err)));
     }
@@ -132,7 +131,7 @@ export const getPosts = () => {
 
 
 export const postDelete = (id) => {
-    const url = `http://localhost:8000/api/posts/${id}/`
+    const url = `/api/posts/${id}/`
     return (dispatch, getState) => {if (window.confirm('Are you sure you wish to delete this item?')){
         let headers = {"Content-Type": "application/json"};
         let {token} = getState().auth;
@@ -163,7 +162,7 @@ export const addToPlaylist = (track) => {
             headers["Authorization"] = `Token ${token}`;
         }
         dispatch(playlistStart());
-        axios.post(`http://localhost:8000/api/playlists/`, {
+        axios.post(`/api/playlists/`, {
             track: track,
         }, {headers: headers}).then(res => {
             if (res.status === 401 || res.status === 403) {

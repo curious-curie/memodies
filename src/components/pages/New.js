@@ -10,7 +10,6 @@ import { withRouter } from 'react-router-dom'
 import { searchReset, searchTracks, selectTrack, postSubmit } from '../../action'
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8000/api/';
 
 
 

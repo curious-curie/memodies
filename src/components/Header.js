@@ -40,11 +40,14 @@ const Header = ({user, logout}) => {
     return (
       
       <Wrapper>
-      <LinkWrapper>
-      { user === ''? <StyledLink to = "/login"><HoverSpan>login</HoverSpan></StyledLink> : <span>Hello, {user} :) </span>}
-      &nbsp;&nbsp; <HoverSpan onClick = {logout}>logout</HoverSpan>
-      </LinkWrapper>
-       <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
+        <LinkWrapper>
+        { user === ''?
+        <StyledLink to = "/login"><HoverSpan>login</HoverSpan></StyledLink>
+          : <span> Hello, {user} :) </span>}
+        &nbsp;&nbsp; 
+        <HoverSpan onClick = {logout}>logout</HoverSpan>
+        </LinkWrapper>
+        <StyledLink to = "/"><Title>Memodies</Title></StyledLink>
        </Wrapper>
     );
 };

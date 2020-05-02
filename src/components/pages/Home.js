@@ -14,7 +14,6 @@ import { QueueMusic } from 'styled-icons/material/QueueMusic';
 import { Home2 } from 'styled-icons/icomoon/Home2';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
 
 
 const HomeButton = styled(Home2)`
@@ -22,20 +21,20 @@ const HomeButton = styled(Home2)`
     margin-left: 30px;
     background: none;
     border: none;
-    color: ${props => props.selected === true? 'hotpink' : 'black'}
+    color: ${props => props.selected? 'hotpink' : 'black'}
 `;
 
 const MyPostsButton = styled(UserCircle)`
     margin: 10px;
     background: none;
     border: none;
-    color: ${props => props.selected === true? 'hotpink' : 'black'}
+    color: ${props => props.selected? 'hotpink' : 'black'}
 `;
 
 const PlaylistButton = styled(QueueMusic)`
     background: none;
     border: none;
-    color: ${props => props.selected === true? 'hotpink' : 'black'}
+    color: ${props => props.selected? 'hotpink' : 'black'}
 `;
 
 
@@ -231,7 +230,7 @@ class Home extends Component {
             
     
             { !this.props.loading && !this.state.playlist && <PostsWrapper>
-                {filteredPosts.map((post) => {
+                {this.props.posts.map((post) => {
               return (
                 <Item key = {post.id}>
                 <Post 
