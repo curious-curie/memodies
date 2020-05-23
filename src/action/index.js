@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
 
 export const SEARCH_TRACKS_START = 'SEARCH_TRACKS_START';
@@ -51,9 +52,8 @@ const postStart = () => {
         type: 'POST_START',
     }
 }
-const postSuccess = (history) => {
+const postSuccess = () => {
     
-    console.log("KK")
     
     return {
         type: 'POST_SUCCESS',
@@ -92,7 +92,6 @@ export const postSubmit = (selected, memo, history) => {
        })
        .catch(err => {
            alert(err);
-           console.log(err);
            dispatch(postError());
        });
     }
@@ -129,15 +128,13 @@ export const searchTracks = (searchWord) => {
                 eachItem['artwork'] = item.artworkUrl100
                 eachItem['previewUrl'] = item.previewUrl
 
-                console.log(eachItem['trackName'])
                 searchResults.push(eachItem);
                 
                 
             
         })
-        console.log(searchResults)
         dispatch(searchTracksSuccess(searchResults));
     })
-    .catch(err => alert("ERROR!"));
+    .catch(() => alert("ERROR!"));
 }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
 
 
@@ -123,7 +124,6 @@ export const getPosts = () => {
     return (dispatch) => {
         axios.get(url)
         .then(res => {
-            console.log(res)
             dispatch(refreshListSuccess(res.data))})
         .catch(err => dispatch(refreshListError(err)));
     }
@@ -174,7 +174,7 @@ export const addToPlaylist = (track) => {
            })
            .catch(err => {
             alert("I think that song is already in your playlist!");
-            dispatch(playlistError());
+            dispatch(playlistError(err));
         });
     }
 }
