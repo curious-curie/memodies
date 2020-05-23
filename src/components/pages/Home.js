@@ -229,8 +229,9 @@ class Home extends Component {
             
             
     
-            { !this.props.loading && !this.state.playlist && <PostsWrapper>
-                {this.props.posts.map((post) => {
+            { !this.props.loading && !this.state.playlist && 
+            <PostsWrapper>
+                {filteredPosts.map((post) => {
               return (
                 <Item key = {post.id}>
                 <Post 
