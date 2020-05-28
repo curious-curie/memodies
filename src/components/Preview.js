@@ -11,7 +11,7 @@ const PlayButton = styled.button`
     border: none;
     cursor:pointer;
     position: absolute;
-    top: -168px;
+    top: -170px;
     right: 97px;
     z-index: 999;
     outline: none;
@@ -29,8 +29,8 @@ const PauseButton = styled.button`
     border: none;
     cursor:pointer;
     position: absolute;
-    top: -168px;
-    right: 99px;
+    top: -170px;
+    right: 98px;
     z-index: 999;
     outline: none;
     :hover {

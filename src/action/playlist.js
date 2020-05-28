@@ -50,15 +50,16 @@ export const getPlaylist = (userId) => {
     }
 }
 
-export const deleteFromPlaylist = (playlistId, postId) => {
+export const deleteFromPlaylist = (playlistId) => {
     const url = `/api/playlists/${playlistId}/`
     return (dispatch) => {
         dispatch(deleteFromPlaylistStart());
-        axios.delete(url).then(res => {
+        axios.delete(url).then(() => {
             dispatch(deleteFromPlaylistSuccess(playlistId));
-            alert("deleted")
+            // // eslint-disable-next-line no-undef
+            // alert("deleted") 
         }).catch(err => {
-            alert("Something Went Wrong... Try Again");
+            // alert("Something Went Wrong... Try Again");
             dispatch(deleteFromPlaylistError(err));
         })
     }
