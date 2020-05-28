@@ -19,13 +19,11 @@ export const loadUser = () => {
               return {status: res.status, data};
             })
           } else {
-            console.log("Server Error!");
             throw res;
           }
         })
         .then(res => {
           if (res.status === 200) {
-            console.log("loaded")
             dispatch({type: 'USER_LOADED', user: res.data });
             return res.data;
           } else if (res.status >= 400 && res.status < 500) {
@@ -37,7 +35,6 @@ export const loadUser = () => {
   }
 
   export const login = (username, password) => {
-    console.log(username, password);
     return (dispatch, getState) => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({username, password});
@@ -49,7 +46,6 @@ export const loadUser = () => {
               return {status: res.status, data};
             })
           } else {
-            console.log("Server Error!");
             throw res;
           }
         })
@@ -80,7 +76,6 @@ export const loadUser = () => {
               return {status: res.status, data};
             })
           } else {
-            console.log("Server Error!");
             throw res;
           }
         })
@@ -123,7 +118,6 @@ export const logout = () => {
                       return {status: res.status, data};
                   })
               } else {
-                  console.log("Server Error!");
                   throw res;
               }
           })

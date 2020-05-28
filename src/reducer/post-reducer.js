@@ -73,7 +73,6 @@ const postReducer = (
         }
 
         case('POST_EDIT_ERROR'):
-    
         return {
             ...state,
             loading: false,
@@ -81,8 +80,6 @@ const postReducer = (
             posts: state.posts,
             error: action.error,
         }
-        
-
         default: return state;
     }
 }

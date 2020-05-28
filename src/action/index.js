@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
-
+import { getPosts } from './post.js'
 export const SEARCH_TRACKS_START = 'SEARCH_TRACKS_START';
 export const SEARCH_TRACKS_ERROR = 'SEARCH_TRACKS_ERROR';
 export const SEARCH_TRACKS_SUCCESS = 'SEARCH_TRACKS_SUCCESS';
@@ -23,9 +23,7 @@ export const searchReset = () => {
 }
 
 
-const searchTracksSuccess = tracks => {
-    console.log(tracks)
-    
+const searchTracksSuccess = tracks => {    
     return {
         type: 'SEARCH_TRACKS_SUCCESS',
         tracks
@@ -40,7 +38,6 @@ const searchTracksSuccess = tracks => {
 // };
 
 export const selectTrack = item => {
-    console.log(item);
     return {
         type: 'SELECT_TRACK',
         item
@@ -53,10 +50,8 @@ const postStart = () => {
     }
 }
 const postSuccess = () => {
-    
-    
-    return {
-        type: 'POST_SUCCESS',
+    return (dispatch) => {
+        dispatch(getPosts())
     }
 };
 
@@ -108,10 +103,8 @@ export const searchTracks = (searchWord) => {
         searchWord = searchWord.replace('%20', ' ');
 
         axios.get(`https://itunes.apple.com/search?term=${searchWord}&entity=musicTrack`)
-        .then( data => { 
-           
-            console.log(data.data.results);
-            console.log(data.data.results.length);
+        .then(data => { 
+
             data.data.results.forEach(item => {
                 eachItem = {
                     id: '',

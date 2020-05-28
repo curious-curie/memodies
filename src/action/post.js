@@ -3,8 +3,6 @@ import axios from 'axios';
 
 
 export const refreshListSuccess = (posts) => {
-
-
     return {
         type: 'REFRESH_LIST_SUCCESS',
         posts: posts
