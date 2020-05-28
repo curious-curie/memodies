@@ -4,37 +4,36 @@ import styled from 'styled-components';
 import { Link , Redirect } from "react-router-dom";
 import { login } from "../../action/auth"
 
-
 const AuthForm = styled.form`
-margin: 40px;
-text-align: center;`;
+  margin: 40px;
+  text-align: center;
+`;
 
 const InputName = styled.div``;
 const AuthInput = styled.input`
-margin-bottom: 15px;
-border: 1px solid whitesmoke;
-border-radius: 15px;
-font-size: 15px;
-outline: none;
-padding: 10px;
-
+  margin-bottom: 15px;
+  border: 1px solid whitesmoke;
+  border-radius: 15px;
+  font-size: 15px;
+  outline: none;
+  padding: 10px;
 `;
 const AuthButton = styled.button`
-width: 180px;
-border-radius: 15px;
-background-color: #999999;
-border: none;
-color: white;
-font-weight: 600;
-font-size: 15px;
-padding: 10px;
-opacity: 0.5;
-margin-bottom: 20px;
+  width: 180px;
+  border-radius: 15px;
+  background-color: #999999;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 10px;
+  opacity: 0.5;
+  margin-bottom: 20px;
 
-:hover {
-  background-color: hotpink;
-  opacity: 1;
-}
+  :hover {
+    background-color: hotpink;
+    opacity: 1;
+  }
 `;
 
 const Sub = styled(Link)`

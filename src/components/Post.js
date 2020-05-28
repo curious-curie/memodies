@@ -45,6 +45,7 @@ const TrackImage = styled.img`
     border-radius: 50%;
     box-shadow: 0 4px 4px rgba(110, 110, 110, 0.1), 0 4px 4px rgba(98, 98, 98, 0.1);
  `;
+ 
 const Circle = styled.div`
     position: absolute;
     width: 30px;
@@ -141,7 +142,6 @@ const BookmarkMusic = styled(QueueMusic)`
     }
 
 `
-
 const DeletePlaylist = styled(DeleteSweep)`
     margin-left: 230px;
     padding-right: 5px;
@@ -152,11 +152,9 @@ const DeletePlaylist = styled(DeleteSweep)`
     }
 
 `
-
 export default class Post extends Component {
 
-    
-    render(){ 
+    render() { 
     
     const {id,track, preview, artist, album, artwork,memo, author, isAuthor } = this.props;
   
@@ -165,11 +163,8 @@ export default class Post extends Component {
             { ! this.props.playlist? <BookmarkMusic onClick = {this.props.addToPlaylist} size="32px"/> :
             <DeletePlaylist onClick = {this.props.deleteFromPlaylist} size="32px"/> }
             <CD>
-        
                 <TrackImage src = {artwork} alt={id}/>
-                
                 <Circle/>
-                
             </CD>
         
         <Preview url = {preview}/>
@@ -182,9 +177,7 @@ export default class Post extends Component {
             <EditButton onClick = {this.props.cancelEdit}>Cancel</EditButton> <EditButton onClick = {this.props.submitEdit}>Edit</EditButton> </>}
 
             <PostFooterWrapper>
-           
                 {isAuthor && <HoverEdit size = "25" title="edit post" onClick = {this.props.onEdit}/>}
-                
                 {isAuthor && <HoverDeleteBin size="25" title="delete post" onClick= {this.props.onRemove}/>}
                 &nbsp; {author}
             </PostFooterWrapper>

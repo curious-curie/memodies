@@ -4,42 +4,42 @@ import { Link } from 'react-router-dom';
 
 const Title = styled.div`
 
-@import url('https://fonts.googleapis.com/css?family=Caveat|Mansalva|Quicksand|Satisfy&display=swap');
-font-family:  'Mansalva', cursive; 
-font-size: 3rem;
-text-align: center;
+  @import url('https://fonts.googleapis.com/css?family=Caveat|Mansalva|Quicksand|Satisfy&display=swap');
+  font-family:  'Mansalva', cursive; 
+  font-size: 3rem;
+  text-align: center;
 
-margin-top: 70px;
-@media (max-width: 500px) {
-  margin-bottom: 20px;
-}
-margin-bottom: 50px;
+  margin-top: 70px;
+  @media (max-width: 500px) {
+    margin-bottom: 20px;
+  }
+  margin-bottom: 50px;
 `;
 
 const LinkWrapper = styled.div`
-margin: 20px;
+  margin: 20px;
 `;
 const StyledLink = styled(Link)`
-text-decoration: none;
-color:black; 
+  text-decoration: none;
+  color:black; 
 
   &:focus, &:hover, &:visited, &:link, &:active {
-        text-decoration: none;
-    }`;
+    text-decoration: none;
+  }
+`;
 
 const HoverSpan = styled.span`
-:hover {
-  color:hotpink;
-}
+  :hover {
+    color:hotpink;
+  }
 `;
 const Wrapper = styled.span`
-@import url('https://fonts.googleapis.com/css?family=Caveat|Mansalva|Quicksand|Satisfy&display=swap');
-font-family:  'Mansalva', cursive; 
-font-size: 20px;
+  @import url('https://fonts.googleapis.com/css?family=Caveat|Mansalva|Quicksand|Satisfy&display=swap');
+  font-family:  'Mansalva', cursive; 
+  font-size: 20px;
 `;
 const Header = ({user, logout}) => {
     return (
-      
       <Wrapper>
         <LinkWrapper>
         { user === ''?

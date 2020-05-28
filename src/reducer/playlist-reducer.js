@@ -1,5 +1,3 @@
-
-
 const playlistReducer = (
     state = {
         posts: [],

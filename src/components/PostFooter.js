@@ -5,10 +5,9 @@ import {Edit} from 'styled-icons/boxicons-solid/Edit';
 
 
 const PostFooterWrapper = styled.div`
-margin-bottom: 10px;
-text-align: right;
-margin-right: 15px;
-
+    margin-bottom: 10px;
+    text-align: right;
+    margin-right: 15px;
 `;
 
 const HoverEdit = styled(Edit)`
@@ -29,8 +28,7 @@ const HoverDeleteBin = styled(DeleteBin)`
 
 const PostFooter = ({id,handleRemove,handleEdit}) => {
     return (
-        <PostFooterWrapper>
-           
+        <PostFooterWrapper>  
             <HoverEdit size = "25" title="edit post" onClick = {handleEdit}/>
             <HoverDeleteBin size="25" title="delete post" onClick = {handleRemove}/>
         </PostFooterWrapper>

@@ -18,7 +18,6 @@ const PlayButton = styled.button`
     :hover {
         opacity: 0.9
     }
- 
 `;
 
 const PauseButton = styled.button`
@@ -36,7 +35,6 @@ const PauseButton = styled.button`
     :hover {
         opacity: 0.9
     }
- 
 `;
 
 
@@ -44,8 +42,6 @@ const PlayWrapper = styled.div`
 position: relative;
 `;
 export default class Preview extends Component {
-
-   
 
     constructor(props){
         super(props);
@@ -55,30 +51,28 @@ export default class Preview extends Component {
         this.url = this.props.url;
         this.audio = new Audio(this.url);
     }
-        play = () => {
-        this.setState({ play: !this.state.play }, () => {
-            if(this.state.play === true) {
-                this.audio.play();
-                setTimeout(function(){
-                    this.setState({play: false});
-                    this.audio.pause();
-               }.bind(this),20000);
-            }
-            else this.audio.pause();
-        })
-
-        }
     
+    play = () => {
+    this.setState({ play: !this.state.play }, () => {
+        if(this.state.play === true) {
+            this.audio.play();
+            setTimeout(function(){
+                this.setState({play: false});
+                this.audio.pause();
+            }.bind(this),20000);
+        }
+        else this.audio.pause();
+    })
+}
     
     render() {
-    
-            return (
-              <PlayWrapper>
-                { !this.state.play && <PlayButton onClick={this.play}><FontAwesomeIcon icon={faPlay} size="2x" /></PlayButton>}
-                { this.state.play && <PauseButton onClick={this.play}><FontAwesomeIcon icon={faPause} size="2x" /></PauseButton>}
-             </PlayWrapper>
-              );
-            }
-          }
+        return (
+            <PlayWrapper>
+            { !this.state.play && <PlayButton onClick={this.play}><FontAwesomeIcon icon={faPlay} size="2x" /></PlayButton>}
+            { this.state.play && <PauseButton onClick={this.play}><FontAwesomeIcon icon={faPause} size="2x" /></PauseButton>}
+            </PlayWrapper>
+            );
+        }
+    }
           
           

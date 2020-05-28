@@ -39,9 +39,10 @@ const PlaylistButton = styled(QueueMusic)`
 
 
 export const LoaderWrapper = styled.div`
-position: relative;
-text-align: center;
-top: 100px; `;
+    position: relative;
+    text-align: center;
+    top: 100px;
+`;
 
 const PostsWrapper = styled.div`
     display: flex;
@@ -65,14 +66,10 @@ const Item = styled.li`
 `;
 
 const SearchWrapper = styled.div`
-
-
 // @media (min-width: 800px) {
 //     position: absolute;
 //     right: 0px;
 // }
-
-
 `;
 class Home extends Component {
 
@@ -117,11 +114,8 @@ class Home extends Component {
             searchOpen: !this.state.searchOpen,
             searchWord: '',
         })
-      }
-
-
-
- 
+    }
+    
     submitEdit = (id) => event => {
      
         const updatedMemo = this.state.editText
@@ -160,12 +154,11 @@ class Home extends Component {
         })
     }
 
-    toggleMyPosts = (userId) => {
+    toggleMyPosts = () => {
             if(!this.state.myPosts) this.setState({myPosts: true, playlist: false})
             else this.setState({myPosts: false})}
 
     render() {
-
 
         let filteredPosts = this.props.posts.filter(post => {
             const query = this.state.searchWord.trim().toLowerCase();
@@ -185,9 +178,7 @@ class Home extends Component {
                 )
             }
         });
-        
-        
-
+    
         return (
             <>
             
@@ -200,11 +191,7 @@ class Home extends Component {
             { !this.state.playlist && !this.state.my && 
              <SearchWrapper><Search type="text" searchToggle = {this.searchToggle} isOpen = {this.state.searchOpen} onChange = {this.search}/></SearchWrapper>}
             { this.props.loading && <LoaderWrapper><Loader/></LoaderWrapper>}
-            
-
-
-                    
-
+        
             { !this.props.loading && this.state.playlist && <PostsWrapper>
                 { this.props.playlist.map((post) => {
               return (
@@ -227,27 +214,24 @@ class Home extends Component {
                 
             </PostsWrapper>} 
             
-            
-    
             { !this.props.loading && !this.state.playlist && 
             <PostsWrapper>
                 {filteredPosts.map((post) => {
-              return (
-                <Item key = {post.id}>
-                <Post 
-                key = {post.id} 
-                playlist = {false}
-                editing = {this.props.editing} handleEditText = {this.handleEditText} 
-                onEdit = {() => this.props.dispatch(postEditOpen(post.id))} submitEdit = {this.submitEdit(post.id)}
-                cancelEdit = {() => this.props.dispatch(cancelEdit(post.id))}
-                onRemove = {() => this.props.dispatch(postDelete(post.id))} 
-                id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}
-                author = {post.owner}
-                isAuthor= {this.props.user.username === post.owner} 
-                addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.id)))} 
-                />
-                </Item> )})} 
-                
+                    return (
+                        <Item key = {post.id}>
+                        <Post 
+                        key = {post.id} 
+                        playlist = {false}
+                        editing = {this.props.editing} handleEditText = {this.handleEditText} 
+                        onEdit = {() => this.props.dispatch(postEditOpen(post.id))} submitEdit = {this.submitEdit(post.id)}
+                        cancelEdit = {() => this.props.dispatch(cancelEdit(post.id))}
+                        onRemove = {() => this.props.dispatch(postDelete(post.id))} 
+                        id = {post.id} artist = {post.artist} album = {post.album} track = {post.title} artwork = {post.artwork} preview={post.preview} memo = {post.memo}
+                        author = {post.owner}
+                        isAuthor= {this.props.user.username === post.owner} 
+                        addToPlaylist = {() => this.props.dispatch((addToPlaylist(post.id)))} 
+                        />
+                        </Item> )})} 
             </PostsWrapper>} 
             </>
         )

@@ -70,15 +70,11 @@ export default class Search extends Component {
             isOpen: false,
         }
     }
-
-   
-      
     
-
-      handleKeyDown = (e) => {
+    handleKeyDown = (e) => {
         e.preventDefault();
         if(e.keyCode === 13) this.searchOpen();
-      }
+    }
       
     render() {
         return (

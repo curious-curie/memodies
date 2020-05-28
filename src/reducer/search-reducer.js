@@ -1,14 +1,3 @@
-// this.state = {
-//     searchTerm: '',
-//     results: [
-
-//     ],
-//     selected: [],
-//     memo: '',
-//     isSearching: true,
-//     loading: false,
-// }
-
 const searchTracks = (
     state = {
         results: [],
@@ -55,7 +44,6 @@ const searchTracks = (
                     err: action.err
                 }
             case 'SELECT_TRACK':
-                console.log(action.item);
                 return {
                     ...state,
                     loading: false,
