@@ -73,7 +73,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({username, password});
   
-      return fetch("/api/auth/register/", {headers, body, method: "POST"})
+      return fetch('https://memodies-back.herokuapp.com/api/auth/register/', {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
@@ -114,7 +114,7 @@ export const logout = () => {
         headers["Authorization"] = `Token ${token}`;
       }
 
-      return fetch("/api/auth/logout/", {headers, body: "", method: "POST"})
+      return fetch("https://memodies-back.herokuapp.com/api/auth/logout/", {headers, body: "", method: "POST"})
           .then(res => {
               if (res.status === 204) {
                   return {status: res.status, data: {}};

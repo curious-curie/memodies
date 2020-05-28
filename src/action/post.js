@@ -119,7 +119,7 @@ export const postEdit = (id, updatedMemo) => {
 
 export const getPosts = () => {
     
-    const url = 'https://memodies-back.herokuapp.com/api/posts/'
+    const url = '/api/posts/'
 
     return (dispatch) => {
         axios.get(url)
