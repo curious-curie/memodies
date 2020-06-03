@@ -1,4 +1,6 @@
 
+import axios from 'axios';
+
 export const loadUser = () => {
     return (dispatch, getState) => {
       dispatch({type: "USER_LOADING"});
@@ -12,16 +14,7 @@ export const loadUser = () => {
       if (token) {
         headers["Authorization"] = `Token ${token}`;
       }
-      return fetch('https://memodies-back.herokuapp.com/api/auth/user/', {headers})
-        .then(res => {
-          if (res.status < 500) {
-            return res.json().then(data => {
-              return {status: res.status, data};
-            })
-          } else {
-            throw res;
-          }
-        })
+      return axios.get('https://memodies-back.herokuapp.com/api/auth/user/', {headers})
         .then(res => {
           if (res.status === 200) {
             dispatch({type: 'USER_LOADED', user: res.data });
@@ -30,6 +23,8 @@ export const loadUser = () => {
             dispatch({type: "AUTHENTICATION_ERROR", data: res.data});
             throw res.data;
           }
+        }).catch( (err) => {
+          dispatch({type: "AUTHENTICATION_ERROR", data: err});
         })
     }
   }
@@ -39,16 +34,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({username, password});
   
-      return fetch('https://memodies-back.herokuapp.com/api/auth/login/', {headers, body, method: "POST"})
-        .then(res => {
-          if (res.status < 500) {
-            return res.json().then(data => {
-              return {status: res.status, data};
-            })
-          } else {
-            throw res;
-          }
-        })
+      return axios.post('https://memodies-back.herokuapp.com/api/auth/login/', { username, password }, { headers })
         .then(res => {
           if (res.status === 200) {
             dispatch({type: 'LOGIN_SUCCESSFUL', data: res.data });
@@ -67,18 +53,8 @@ export const loadUser = () => {
   export const register = (username, password) => {
     return (dispatch, getState) => {
       let headers = {"Content-Type": "application/json"};
-      let body = JSON.stringify({username, password});
   
-      return fetch('https://memodies-back.herokuapp.com/api/auth/register/', {headers, body, method: "POST"})
-        .then(res => {
-          if (res.status < 500) {
-            return res.json().then(data => {
-              return {status: res.status, data};
-            })
-          } else {
-            throw res;
-          }
-        })
+      return axios.post('https://memodies-back.herokuapp.com/api/auth/register/',  { username, password }, { headers })
         .then(res => {
           if (res.status === 200) {
             alert("Registered Successfuly! Welcome!")
@@ -109,7 +85,7 @@ export const logout = () => {
         headers["Authorization"] = `Token ${token}`;
       }
 
-      return fetch("https://memodies-back.herokuapp.com/api/auth/logout/", {headers, body: "", method: "POST"})
+      return axios.post("https://memodies-back.herokuapp.com/api/auth/logout/", {headers})
           .then(res => {
               if (res.status === 204) {
                   return {status: res.status, data: {}};
