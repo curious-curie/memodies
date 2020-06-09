@@ -167,7 +167,7 @@ export default class Post extends Component {
                 <Circle/>
             </CD>
         
-        <Preview url = {preview}/>
+            <Preview url = {preview}/>
             <Title>{track} </Title>
            
             <Artist>{artist}</Artist>
