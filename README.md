@@ -1,10 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-# Memodies 
+# Memodies(This is repository of FRONTEND code)
 <br>
 
 ### Django REST API + React + Redux 
-#### styled components, redux-thunk, Itunes API have been used / responsive design 
+* styled components, redux-thunk, Itunes API have been used / responsive design 
 ### Note your thoughts and memories that a song triggered
 ### Or quote favorite lyrics from a particular song
 ### See other's notes, add them to your playlist, listen to the preview of the song
