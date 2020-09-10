@@ -1,4 +1,4 @@
-# Memodies(This is repository of FRONTEND code)
+# Memodies(This is Front-end repository)
 <br>
 
 ### Django REST API + React + Redux 
@@ -8,7 +8,8 @@
 ### See other's notes, add them to your playlist, listen to the preview of the song
 
 <br><br>
-This is my toy-project to study react, redux mainly. designed & developed by curious-curie :) 
+This is my toy-project to study react, redux mainly. <br>
+designed & developed by curious-curie :) <br>
 link to memodies-backend repository: [Link](https://github.com/curious-curie/memodies-back)
 <br><br>
 
@@ -24,6 +25,8 @@ link to memodies-backend repository: [Link](https://github.com/curious-curie/mem
 * search by keyword and see notes associated with it 
 * additional features will be added soon... 
 <br>
-![memodies-phone](https://user-images.githubusercontent.com/47528556/68744871-e64d9200-0638-11ea-883a-908fbc0e2eff.gif)
+<img src="https://user-images.githubusercontent.com/47528556/68744871-e64d9200-0638-11ea-883a-908fbc0e2eff.gif">
 <br><br>
-![memodies-desktop](https://user-images.githubusercontent.com/47528556/68744872-e6e62880-0638-11ea-8a37-1e7e88143a9d.gif)
+
+<img src="https://user-images.githubusercontent.com/47528556/68744872-e6e62880-0638-11ea-8a37-1e7e88143a9d.gif">
+
